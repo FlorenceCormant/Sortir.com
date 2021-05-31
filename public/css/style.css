@@ -1,0 +1,20 @@
+.navigation_bar{ /*Gestion de la couleur de la navbar*/
+    background-color: #284243;
+}
+
+.navigation_bar_item{ /*Sous menu de la barre de navigation*/
+    justify-content: flex-end;
+}
+
+.navigation_bar_item a { /*Gestion des liens de la navbar*/
+    color: white;
+    font-size: 1.2em;
+}
+
+.navigation_bar_item a:hover{ /*Couleur des liens en passant dessus*/
+    color: #5eb5e0;
+}
+
+.date_jour{
+    text-align: end;
+}

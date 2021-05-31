@@ -1,7 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Accueil </h1>
+    <div class="date_jour">
+
+        Date du jour : {{ "now"|date('d/m/Y') }}
+
+        {% for sortie in sorties %}
+
+        <h1> {{ sortie.nom }} </h1>
+            {{ sortie.dateDebut|date('d/m/Y') }}
+        {% endfor %}
+
+    </div>
 
 {% endblock %}
 
