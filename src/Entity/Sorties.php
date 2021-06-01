@@ -65,17 +65,17 @@ class Sorties
     private $inscriptions;
 
     /**
-     * @ORM\ManyToOne(targetEntity=etats::class, inversedBy="sorties")
+     * @ORM\ManyToOne(targetEntity=Etats::class, inversedBy="sorties")
      */
     private $no_etat;
 
     /**
-     * @ORM\ManyToOne(targetEntity=lieux::class, inversedBy="sorties")
+     * @ORM\ManyToOne(targetEntity=Lieux::class, inversedBy="sorties")
      */
     private $no_lieu;
 
     /**
-     * @ORM\ManyToOne(targetEntity=participants::class, inversedBy="sorties")
+     * @ORM\ManyToOne(targetEntity=Participants::class, inversedBy="sorties")
      */
     private $organisateur;
 
@@ -229,12 +229,12 @@ class Sorties
         return $this;
     }
 
-    public function getNoLieu(): ?lieux
+    public function getNoLieu(): ?Lieux
     {
         return $this->no_lieu;
     }
 
-    public function setNoLieu(?lieux $no_lieu): self
+    public function setNoLieu(?Lieux $no_lieu): self
     {
         $this->no_lieu = $no_lieu;
 
