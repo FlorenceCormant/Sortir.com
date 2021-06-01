@@ -7,8 +7,32 @@
 
         {% for sortie in sorties %}
 
-        <h1> {{ sortie.nom }} </h1>
-            {{ sortie.dateDebut|date('d/m/Y') }}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Nom de la sortie</th>
+                    <th scope="col">Date de la sortie</th>
+                    <th scope="col">Clôture</th>
+                    <th scope="col">Inscrit/place</th>
+                    <th scope="col">Etat</th>
+                    <th scope="col">Inscrit</th>
+                    <th scope="col">Organisateur</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">{{ sortie.nom }}</th>
+                    <td>{{ sortie.dateDebut|date('d/m/Y') }}</td>
+                    <td>{{ sortie.dateCloture|date('d/m/Y') }}</td>
+                    <td>{{ sortie.nbInscriptionsMax }}</td>
+                    <td>{{ sortie.etatSortie }}</td>
+                    <td></td>
+                    <td>{{ sortie.organisateur.pseudo }}</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
         {% endfor %}
 
     </div>
