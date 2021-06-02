@@ -13,33 +13,44 @@
         </div>
 
         {{ form_start(sortieForm) }}
-        <div class="form">
+        <div class="form container">
             <div class="form-group ">
                 {{ form_row(sortieForm.nom, {'attr':{'class':'form-control'}}) }}
             </div>
-             <div class="form-group " >
-                Date debut :  {{ form_widget(sortieForm.date_debut.date.day)}}{{ form_widget(sortieForm.date_debut.date.month) }}{{ form_widget(sortieForm.date_debut.date.year) }}
-                 {{ form_widget(sortieForm.date_debut.time.hour) }} Heures  {{ form_widget(sortieForm.date_debut.time.minute) }} Minutes
+            <div class="row">
+             <div class="form-group col" >
+                Date debut :  {{ form_widget(sortieForm.date_debut)}}
 
              </div>
-            <div class="form-group">
-               Date fin : {{ form_widget(sortieForm.date_cloture.date.day)}}{{ form_widget(sortieForm.date_cloture.date.month) }}{{ form_widget(sortieForm.date_cloture.date.year) }}
-                {{ form_widget(sortieForm.date_cloture.time.hour) }} Heures  {{ form_widget(sortieForm.date_cloture.time.minute) }} Minutes
+            <div class="form-group col">
+               Date fin : {{ form_widget(sortieForm.date_cloture)}}
             </div>
-            <div class="form-group">
+            </div>
+            <div class="row">
+            <div class="form-group col">
                 {{ form_row(sortieForm.nb_inscriptions_max , {'attr':{'class':'form-control'}}) }}
             </div>
 
-            <div  class="form-group">
+            <div  class="form-group col">
                 {{ form_row(sortieForm.duree , {'attr':{'class':'form-control'}}) }}
             </div>
+            </div>
+
             <div class="form-group">
                 {{ form_row(sortieForm.description_infos , {'attr':{'class':'form-control'}})}}
             </div>
-            <div class="form-group">
+            <div class="row">
+            <div class="form-group col">
                 {{ form_row(sortieForm.noLieu , {'attr':{'class':'form-control'}}) }}
             </div>
-            <button>Créer une sortie</button>
+            <div class="form-group col text-center align-text-bottom">
+                <a href="{{ path('createlieu')}}">Créer lieu</a>
+            </div>
+            </div>
+            <div>
+                <button class="btn btn-outline-secondary">Créer une sortie</button>
+            </div>
+
 
 
         {{ form_end(sortieForm) }}

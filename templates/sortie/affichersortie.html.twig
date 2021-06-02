@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Afficher une sortie</h1>
+
+    <p>Nom de la sortie : {{ detailsortie.nom }}</p>
+    <p>Date et heure de la sortie : {{ detailsortie.dateDebut|date("Y-m-d") }}</p>
+    <p>Date limite d'inscription : {{ detailsortie.dateCloture|date("Y-m-d") }}</p>
+    <p>Nombre de place : {{ detailsortie.nbInscriptionsMax }}</p>
+    <p>Durée : {{ detailsortie.duree }} heures</p>
+    <p>Description et infos : {{ detailsortie.descriptionInfos }}</p>
+    <p>Ville organisatrice : {{ detailsortie.noLieu.noVille.nom }}</p>
+    <p>Lieu : {{ detailsortie.noLieu.nom }}</p>
+    <p>Rue : {{ detailsortie.noLieu.rue }}</p>
+    <p>Code postal : {{ detailsortie.noLieu.noVille.codePostal }}</p>
+    <p>Lattitude : {{ detailsortie.noLieu.latitude }}</p>
+    <p>Longitude : {{ detailsortie.noLieu.longitude }}</p>
+
+
+
+
+{% endblock %}
+

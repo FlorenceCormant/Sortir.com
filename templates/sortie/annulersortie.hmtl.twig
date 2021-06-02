@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Annuler la sortie</h1>
+
+    <p>Nom de la sortie : {{ detailsortie.nom }}</p>
+    <p>Date et heure de la sortie : {{ detailsortie.dateDebut|date("Y-m-d") }}</p>
+    <p>Ville organisatrice : {{ detailsortie.noLieu.noVille.nom }}</p>
+    <p>Lieu : {{ detailsortie.noLieu.nom }} {{ detailsortie.noLieu.rue }} {{ detailsortie.noLieu.noVille.codePostal }} {{ detailsortie.noLieu.noVille.nom }}</p>
+
+{% endblock %}
+

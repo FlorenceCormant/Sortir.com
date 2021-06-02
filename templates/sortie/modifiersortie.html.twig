@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Sortie{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid pt-3">
+    <div class="row">
+        <div class="col">
+            <h3>Modifier la sortie</h3>
+            <hr>
+        </div>
+    </div>
+
+    {{ form_start(sortieForm) }}
+    <div class="form container">
+        <div class="form-group ">
+            {{ form_row(sortieForm.nom, {'attr':{'class':'form-control'}}) }}
+        </div>
+        <div class="row">
+            <div class="form-group col" >
+                Date debut :  {{ form_widget(sortieForm.date_debut)}}
+
+            </div>
+            <div class="form-group col">
+                Date fin : {{ form_widget(sortieForm.date_cloture)}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col">
+                {{ form_row(sortieForm.nb_inscriptions_max , {'attr':{'class':'form-control'}}) }}
+            </div>
+
+            <div  class="form-group col">
+                {{ form_row(sortieForm.duree , {'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_row(sortieForm.description_infos , {'attr':{'class':'form-control'}})}}
+        </div>
+            <div class="form-group">
+                {{ form_row(sortieForm.noLieu , {'attr':{'class':'form-control'}}) }}
+            </div>
+
+            <div class="row">
+                <div class="col"> <button class="btn btn-outline-secondary">Modifier la sortie</button></div>
+                <div class="col"><button class="btn btn-outline-secondary"><a class="link_button" href="{{ path('supprimersortie', {'id' : suppsortie.id}) }}">Supprimer</a></button></div>
+
+            </div>
+        {{ form_end(sortieForm) }}
+        </div>
+    </div>
+
+
+
+{% endblock %}

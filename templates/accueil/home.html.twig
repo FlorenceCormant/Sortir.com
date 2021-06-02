@@ -6,7 +6,7 @@
     </div>
 
     <div>
-        <form action="{{ path('accueil_home') }}">
+        {# <form action="{{ path('accueil_home') }}">
             <h2>Filtrer les sorties</h2>
             <label for="Site">Site :
                 <select name="Site" id="Site">
@@ -27,11 +27,19 @@
             </label>
 
             <input type="submit" value="Rechercher">
-        </form>
+        </form> #}
 
 
         {{ form_start(form) }}
+        <div class="form-row">
+            <div class="col">
+                {{ form_row(form.nom) }}
+            </div>
+            <div class="col">
+                <button class="btn btn-primary">Rechercher</button>
+            </div>
 
+        </div>
         {{ form_end(form) }}
 
 
@@ -56,9 +64,13 @@
                     <td>{{ sortie.dateCloture|date('d/m/Y') }}</td>
                     <td>{{ sortie.nbInscriptionsMax }}</td>
                     <td>{{ sortie.noEtat.libelle }}</td>
+                    <td>{{ sortie.noLieu.noVille.nom }}</td>
+
                     <td></td>
                     <td>{{ sortie.organisateur.pseudo }}</td>
-                    <td></td>
+                    <td><a href="{{ path('modificationsortie', {'id' : sortie.id}) }}">Modification</a><a
+                                href="{{ path('detailsortie', {'id' : sortie.id}) }}">Detail</a><a
+                                href="{{ path('annulersortie', {'id' : sortie.id}) }}">Annuler</a></td>
                 </tr>
                 </tbody>
             {% endfor %}
