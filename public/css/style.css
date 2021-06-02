@@ -18,3 +18,9 @@
 .date_jour{
     text-align: end;
 }
+
+.table_sortie{
+    overflow-y: scroll;
+    display: block;
+    height: 500px;
+}

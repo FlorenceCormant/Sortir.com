@@ -2,41 +2,70 @@
 
 {% block body %}
     <div class="date_jour">
-
         Date du jour : {{ "now"|date('d/m/Y') }}
+    </div>
 
-        {% for sortie in sorties %}
+    <div>
+        <form action="{{ path('accueil_home') }}">
+            <h2>Filtrer les sorties</h2>
+            <label for="Site">Site :
+                <select name="Site" id="Site">
+                    <option value="">Choisir une ville</option>
 
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">Nom de la sortie</th>
-                    <th scope="col">Date de la sortie</th>
-                    <th scope="col">Clôture</th>
-                    <th scope="col">Inscrit/place</th>
-                    <th scope="col">Etat</th>
-                    <th scope="col">Inscrit</th>
-                    <th scope="col">Organisateur</th>
-                    <th scope="col">Actions</th>
-                </tr>
-                </thead>
+                    {% for ville in villes %}
+                        <option value="villes">
+                            {{ ville.nom }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </label>
+
+            <label>
+                Le nom de la sortie contient :
+
+                <input id="rechercher" name="recherche" type="search">
+            </label>
+
+            <input type="submit" value="Rechercher">
+        </form>
+
+
+        {{ form_start(form) }}
+
+        {{ form_end(form) }}
+
+
+        <table class="table table-hover table-stripped table_sortie">
+            <thead>
+            <tr>
+                <th scope="col">Nom de la sortie</th>
+                <th scope="col">Date de la sortie</th>
+                <th scope="col">Clôture</th>
+                <th scope="col">Inscrit/place</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Inscrit</th>
+                <th scope="col">Organisateur</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            {% for sortie in sorties %}
                 <tbody>
                 <tr>
                     <th scope="row">{{ sortie.nom }}</th>
                     <td>{{ sortie.dateDebut|date('d/m/Y') }}</td>
                     <td>{{ sortie.dateCloture|date('d/m/Y') }}</td>
                     <td>{{ sortie.nbInscriptionsMax }}</td>
-                    <td>{{ sortie.etatSortie }}</td>
+                    <td>{{ sortie.noEtat.libelle }}</td>
                     <td></td>
-                    <td></td>
+                    <td>{{ sortie.organisateur.pseudo }}</td>
                     <td></td>
                 </tr>
                 </tbody>
-            </table>
-        {% endfor %}
+            {% endfor %}
+        </table>
 
     </div>
-
+    <a type="button" href="{{ path('create') }}" class="btn btn-outline-secondary">Créer une sortie</a>
 {% endblock %}
 
 {% block title %}
