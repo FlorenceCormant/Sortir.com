@@ -217,12 +217,12 @@ class Sorties
         return $this;
     }
 
-    public function getNoEtat(): ?etats
+    public function getNoEtat(): ?Etats
     {
         return $this->no_etat;
     }
 
-    public function setNoEtat(?etats $no_etat): self
+    public function setNoEtat(?Etats $no_etat): self
     {
         $this->no_etat = $no_etat;
 
@@ -241,12 +241,12 @@ class Sorties
         return $this;
     }
 
-    public function getOrganisateur(): ?participants
+    public function getOrganisateur(): ?Participants
     {
         return $this->organisateur;
     }
 
-    public function setOrganisateur(?participants $organisateur): self
+    public function setOrganisateur(?Participants $organisateur): self
     {
         $this->organisateur = $organisateur;
 
