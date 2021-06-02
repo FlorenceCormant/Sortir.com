@@ -2,8 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\PropertySearch;
 use App\Entity\Sorties;
+use App\Form\PropertySearchType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -22,29 +25,18 @@ class SortiesRepository extends ServiceEntityRepository
     // /**
     //  * @return Sorties[] Returns an array of Sorties objects
     //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Sorties
+    public function rechercher(PropertySearch $search)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
+
+        $rechercher = $search->getNom();
+        return $this->createQueryBuilder('u')
+            ->Where('u.nom LIKE :word')
+            ->setParameter('word', '%'.$rechercher.'%')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
+
+
     }
-    */
+
 }

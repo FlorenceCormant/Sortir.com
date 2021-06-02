@@ -10,6 +10,11 @@ class PropertySearch{
     private $nom;
 
     /**
+     * @var string|null
+     */
+    private $ville;
+
+    /**
      * @return string|null
      */
     public function getNom(): ?string
@@ -26,6 +31,26 @@ class PropertySearch{
         $this->nom = $nom;
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    /**
+     * @param string|null $ville
+     * @return PropertySearch
+     */
+    public function setVille(?string $ville): PropertySearch
+    {
+        $this->ville = $ville;
+        return $this;
+    }
+
+
 
 
 
