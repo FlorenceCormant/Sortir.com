@@ -1,7 +1,8 @@
 security:
-    encoders:
+    password_hashers:
         App\Entity\User:
             algorithm: auto
+
 
     # https://symfony.com/doc/current/security/experimental_authenticators.html
     enable_authenticator_manager: true
@@ -12,13 +13,13 @@ security:
             entity:
                 class: App\Entity\User
                 property: pseudo
+        # used to reload user from session & other features (e.g. switch_user)
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: app_user_provider
             custom_authenticator: App\Security\AppAuthenticator
             logout:
                 path: app_logout
