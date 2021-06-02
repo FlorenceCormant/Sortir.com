@@ -2,17 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Etats;
+use App\Entity\Participants;
 use App\Entity\Sorties;
 use App\Form\SortieFormType;
-
 use App\Repository\SortiesRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-
-
+use function Symfony\Component\String\s;
 
 
 class SortieController extends AbstractController
@@ -22,11 +23,30 @@ class SortieController extends AbstractController
      */
     public function createSortie(Request $request,EntityManagerInterface $entityManager): Response
     {
-        $sortie = new Sorties();
-        $form = $this->createForm(SortieFormType::class, $sortie);
-        $form->handleRequest($request);
+        $maValeur = $request->request->get("valeurenregistrer");
 
-        if($form->isSubmitted()){
+        $sortie = new Sorties();
+
+
+        $organisateur = $this->getDoctrine()
+            ->getRepository(Participants::class)
+            ->find(1);
+
+        $sortie->setOrganisateur($organisateur);
+
+
+        $sortieForm = $this->createForm(SortieFormType::class, $sortie);
+        $sortieForm->handleRequest($request);
+
+
+        if($sortieForm->isSubmitted()){
+
+            $etat = $this->getDoctrine()
+                ->getRepository(Etats::class)
+                ->find($maValeur);
+
+            $sortie->setNoEtat($etat);
+
             $entityManager->persist($sortie);
             $entityManager->flush();
 
@@ -38,10 +58,11 @@ class SortieController extends AbstractController
 
 
         return $this->render('sortie/createsortie.html.twig', [
-            'sortieForm' => $form->createView()
+            'sortieForm' => $sortieForm->createView()
         ]);
 
     }
+
 
     /**
      * @Route("/sortie/detail/{id}", name="detailsortie")
@@ -61,6 +82,8 @@ class SortieController extends AbstractController
      * @Route("/sortie/modification/{id}", name="modificationsortie")
      */
     public function modifiersortie($id, Request $request, EntityManagerInterface $entityManager, SortiesRepository $sortiesRepository){
+
+
 
         $sortie = $sortiesRepository->find($id);
         $form = $this->createForm(SortieFormType::class, $sortie);
@@ -97,13 +120,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/annuler/{id}", name="annulersortie")
      */
-    public function annulerSortie($id, SortiesRepository $sortiesRepository){
+    public function annulerSortie($id, Request $request, EntityManagerInterface $entityManager, SortiesRepository $sortiesRepository): Response{
 
-        $sortie = $sortiesRepository->find($id);
-
-        return $this->render('sortie/annulersortie.hmtl.twig',[
-            'detailsortie' => $sortie
-        ]);
     }
-
 }
