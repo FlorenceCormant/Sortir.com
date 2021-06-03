@@ -10,7 +10,7 @@ class PropertySearch{
     private $nom;
 
     /**
-     * @var string|null
+     * @var Villes|null
      */
     private $ville;
 
@@ -33,18 +33,18 @@ class PropertySearch{
     }
 
     /**
-     * @return string|null
+     * @return Villes|null
      */
-    public function getVille(): ?string
+    public function getVille(): ?Villes
     {
         return $this->ville;
     }
 
     /**
-     * @param string|null $ville
+     * @param Villes|null $ville
      * @return PropertySearch
      */
-    public function setVille(?string $ville): PropertySearch
+    public function setVille(?Villes $ville): PropertySearch
     {
         $this->ville = $ville;
         return $this;

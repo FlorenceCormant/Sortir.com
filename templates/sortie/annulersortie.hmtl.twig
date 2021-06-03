@@ -8,6 +8,9 @@
     <p>Date et heure de la sortie : {{ detailsortie.dateDebut|date("Y-m-d") }}</p>
     <p>Ville organisatrice : {{ detailsortie.noLieu.noVille.nom }}</p>
     <p>Lieu : {{ detailsortie.noLieu.nom }} {{ detailsortie.noLieu.rue }} {{ detailsortie.noLieu.noVille.codePostal }} {{ detailsortie.noLieu.noVille.nom }}</p>
-
+    <textarea id="story" name="story"
+              rows="5" style="margin-left: 10px" cols="33"></textarea>
+    <button class="btn btn-outline-secondary">Enregistrer</button>
+    <button class="btn btn-outline-secondary">Annuler</button>
 {% endblock %}
 
