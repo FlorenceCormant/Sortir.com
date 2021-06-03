@@ -60,7 +60,7 @@ class Participants
     private $actif;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Inscriptions::class, mappedBy="no_participant")
+     * @ORM\ManyToMany(targetEntity=Inscriptions::class, mappedBy="userinscription")
      */
     private $inscriptions;
 
@@ -69,10 +69,16 @@ class Participants
      */
     private $sorties;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Inscriptions::class, mappedBy="userinscription")
+     */
+    private $userinscription;
+
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
         $this->sorties = new ArrayCollection();
+        $this->userinscription = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -227,6 +233,36 @@ class Participants
             // set the owning side to null (unless already changed)
             if ($sorty->getOrganisateur() === $this) {
                 $sorty->setOrganisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Inscriptions[]
+     */
+    public function getUserinscription(): Collection
+    {
+        return $this->userinscription;
+    }
+
+    public function addUserinscription(Inscriptions $userinscription): self
+    {
+        if (!$this->userinscription->contains($userinscription)) {
+            $this->userinscription[] = $userinscription;
+            $userinscription->setUserinscription($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserinscription(Inscriptions $userinscription): self
+    {
+        if ($this->userinscription->removeElement($userinscription)) {
+            // set the owning side to null (unless already changed)
+            if ($userinscription->getUserinscription() === $this) {
+                $userinscription->setUserinscription(null);
             }
         }
 
