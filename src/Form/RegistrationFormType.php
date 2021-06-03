@@ -21,7 +21,7 @@ class RegistrationFormType extends AbstractType
             ->add("prenom")
             ->add("nom")
             ->add("telephone")
-            ->add("mail")
+            ->add("email")
             ->add('plainPassword', PasswordType::class, [
                 'label' => 'Mot de Passe',
                 // instead of being set onto the object directly,

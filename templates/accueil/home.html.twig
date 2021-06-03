@@ -56,7 +56,7 @@
                 <th scope="col">Actions</th>
             </tr>
             </thead>
-          {#   {% for sortie in sorties %}
+             {% for sortie in sorties %}
                 <tbody>
                 <tr>
                     <th scope="row">{{ sortie.nom }}</th>
@@ -67,14 +67,15 @@
                     <td>{{ sortie.noLieu.noVille.nom }}</td>
 
 
+
                     <td></td>
-                    <td>{{ sortie.organisateur.pseudo }}</td>
+                    <td>{{ sortie.organisateur.userIdentifier }}</td> "
                     <td><a href="{{ path('modificationsortie', {'id' : sortie.id}) }}">Modification</a><a
                                 href="{{ path('detailsortie', {'id' : sortie.id}) }}">Detail</a><a
                                 href="{{ path('annulersortie', {'id' : sortie.id}) }}">Annuler</a></td>
                 </tr>
                 </tbody>
-            {% endfor %} #}
+            {% endfor %}
         </table>
 
     </div>

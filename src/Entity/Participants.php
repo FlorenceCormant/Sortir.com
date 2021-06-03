@@ -25,7 +25,7 @@ class Participants extends User
     private $actif;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Inscriptions::class, mappedBy="no_participant")
+     * @ORM\OneToMany(targetEntity=Inscriptions::class, mappedBy="no_participant")
      */
     private $inscriptions;
 

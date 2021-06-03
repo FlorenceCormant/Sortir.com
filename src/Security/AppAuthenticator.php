@@ -78,7 +78,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException("Le Login n'existe pas.");
+            throw new CustomUserMessageAuthenticationException('Login ou mot de passe incorrect');
         }
 
         return $user;
