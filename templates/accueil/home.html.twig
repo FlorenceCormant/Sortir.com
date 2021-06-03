@@ -57,6 +57,8 @@
             </tr>
             </thead>
             {% for sortie in sorties %}
+            {# Affiche seulement les sorties qui datent de moins de 1 mois #}
+            {% if date(sortie.dateDebut) > date("-1 months") %}
                 <tbody>
                 <tr>
                     <th scope="row">{{ sortie.nom }}</th>
@@ -65,14 +67,43 @@
                     <td>{{ sortie.nbInscriptionsMax }}</td>
                     <td>{{ sortie.noEtat.libelle }}</td>
                     <td>{{ sortie.noLieu.noVille.nom }}</td>
+                    <td>{{ sortie.organisateur.pseudo}}</td>
 
-                    <td></td>
-                    <td>{{ sortie.organisateur.pseudo }}</td>
-                    <td><a href="{{ path('modificationsortie', {'id' : sortie.id}) }}">Modification</a><a
-                                href="{{ path('detailsortie', {'id' : sortie.id}) }}">Detail</a><a
-                                href="{{ path('annulersortie', {'id' : sortie.id}) }}">Annuler</a></td>
+                    <td><a href="{{ path('detailsortie', {'id' : sortie.id}) }}">Afficher</a>
+
+                        {# Permet la modification et l'annulation seulement si les user id et egale au user de l'utilisateur et seulement si la sortie est en cours ou en creation #}
+                        {%  if sortie.noEtat.id != 3 and sortie.noEtat.id != 2  %}
+                        {% if utilisateur != null %}
+                        {% if sortie.organisateur.id == app.user.id%}
+                        <a href="{{ path('modificationsortie', {'id' : sortie.id}) }}">Modification</a>
+                        <a href="{{ path('annulersortie', {'id' : sortie.id}) }}">Annuler</a></td>
+                        {% endif %}
+                        {% endif %}
+                        {% endif %}
+
+                        {# Permet de s'inscrire seulement si la sortie est est ouverte et si l'utilisateur n'est pas l'organisateur de la sortie#}
+                        {%  if sortie.noEtat.id != 2 and sortie.noEtat.id != 3  and sortie.noEtat.id != 4 and sortie.noEtat.id != 5  %}
+                        {% if utilisateur != null %}
+                            {% if sortie.organisateur.id != app.user.id%}
+                                {% if date(sortie.dateCloture) < date() %}
+                                    <a class="link_button" href="{{ path('inscription', {'id' : sortie.id }) }}">S'inscrire'</a>
+                        {% endif %}
+                        {% endif %}
+                         {% endif %}
+                            {% endif %}
+
+                     {# Permet de se desister seulement si les inscriptions sont ouverte #}
+                    {%  if sortie.noEtat.id != 2 and sortie.noEtat.id != 3  and sortie.noEtat.id != 4 and sortie.noEtat.id != 5  %}
+                    {% if utilisateur != null %}
+                    {% if sortie.organisateur.id != app.user.id%}
+                        <a href="">Se désister</a>
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}
+
                 </tr>
                 </tbody>
+                {% endif %}
             {% endfor %}
         </table>
 

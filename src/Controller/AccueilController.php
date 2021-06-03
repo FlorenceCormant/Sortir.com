@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\PropertySearch;
+use App\Entity\User;
 use App\Form\PropertySearchType;
 use App\Repository\SortiesRepository;
 use App\Repository\VillesRepository;
@@ -20,6 +21,7 @@ class AccueilController extends AbstractController
     {
         $search = new PropertySearch();
 
+        $utilisateur = $this->getUser();
 
         $villes = $villesRepository->findAll();
         $form = $this->createForm(PropertySearchType::class, $search);
@@ -36,6 +38,7 @@ class AccueilController extends AbstractController
         return $this->render('accueil/home.html.twig', [
             "sorties" => $sorties,
             "villes" => $villes,
+            "utilisateur" => $utilisateur,
             "form" => $form->createView()
         ]);
     }
