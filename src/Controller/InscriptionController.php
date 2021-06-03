@@ -20,7 +20,7 @@ class InscriptionController extends AbstractController
      */
     public function createInscription($id, Request $request, EntityManagerInterface $entityManager, SortiesRepository $sortiesRepository, UserRepository $userRepository): Response
     {
-        $user = $this->getUser()->getId;
+        $user = $this->getUser();
 
 
 
@@ -33,7 +33,7 @@ class InscriptionController extends AbstractController
 
         $inscription = new Inscriptions();
 
-           $inscription->addNoParticipant($userRepository->findOneBy(['id' => $user]));
+            $inscription->setUserinscription($user);
             $inscription->setDateInscription(new \DateTime());
             $inscription->setNoSortie($sortie);
 
