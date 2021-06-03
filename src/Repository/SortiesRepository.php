@@ -29,14 +29,61 @@ class SortiesRepository extends ServiceEntityRepository
     public function rechercher(PropertySearch $search)
     {
 
-        $rechercher = $search->getNom();
-        return $this->createQueryBuilder('u')
+        $qb =  $this->createQueryBuilder('u')
             ->Where('u.nom LIKE :word')
-            ->setParameter('word', '%'.$rechercher.'%')
+            ->setParameter('word', '%'.$search->getNom().'%')
+            ->getQuery()
+            ->getResult();
+        return $qb;
+    }
+
+    public function searchVille(PropertySearch $search)
+    {
+        $qb =  $this->createQueryBuilder('s')
+            ->leftJoin('s.no_lieu','noLieu')
+            ->leftJoin('noLieu.no_ville','ville')
+            ->Where('noLieu.no_ville = :ville')
+            ->setParameter('ville', $search->getVille()->getId())
             ->getQuery()
             ->getResult();
 
+        return $qb;
+    }
+
+    public function test(PropertySearch $search){
+        if($search->getNom() != null && $search->getVille() !=null){
+            //$test1 = $this->rechercher($search) + $this->searchVille($search);
+            $test1 = $this->machin($search);
+            return $test1;
+
+        }else if ($search->getNom() == null && $search->getVille() != null){
+            $test2 = $this->searchVille($search);
+            return $test2;
+        }
+        else if ($search->getNom() != null && $search->getVille() == null){
+            $test3 = $this->rechercher($search);
+            return $test3;
+        }else{
+            return '';
+        }
 
     }
+
+    public function machin(PropertySearch $search)
+    {
+        $qb =  $this->createQueryBuilder('s')
+            ->leftJoin('s.no_lieu','noLieu')
+            ->leftJoin('noLieu.no_ville','ville')
+            ->Where('noLieu.no_ville = :ville')
+            ->setParameter('ville', $search->getVille()->getId())
+            ->andWhere('s.nom LIKE :word')
+            ->setParameter('word', '%'.$search->getNom().'%')
+            ->getQuery()
+            ->getResult();
+
+        return $qb;
+    }
+
+
 
 }

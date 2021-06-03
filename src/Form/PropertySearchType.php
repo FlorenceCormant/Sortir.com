@@ -16,7 +16,7 @@ class PropertySearchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $villes = new Villes();
+
 
         $builder
             ->add('nom', TextType::class, [
@@ -25,11 +25,14 @@ class PropertySearchType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Nom de la sortie'
                 ]
+            ])
+            ->add('ville', EntityType::class, [
+                'required' => false,
+                'choice_value' => "id",
+                'class' => Villes::class,
+                'choice_label' => 'nom',
+                'placeholder' => "Tout"
             ]);
-          //  ->add('ville', EntityType::class, [
-            //    'class' => Villes::class,
-             //   'choices' => $villes->getNom(),
-            //]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
