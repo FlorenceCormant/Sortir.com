@@ -22,6 +22,7 @@ class AccueilController extends AbstractController
         $search = new PropertySearch();
         $form = $this->createForm(PropertySearchType::class, $search);
         $form->handleRequest($request);
+        $sorties=$sortiesRepository->findAll();
         if ($form->isSubmitted() && $form->isValid()) {
             $search = $form->getData();
 
