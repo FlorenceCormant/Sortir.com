@@ -54,7 +54,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
     {
         $credentials = [
             'pseudo' =>$request->request->get('pseudo'),
-            'email' => $request->request->get('email'),
+            //'email' => $request->request->get('email'),
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
@@ -73,11 +73,12 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['pseudo' => $credentials['pseudo']]);
+       // $user = $this->entityManager->getRepository(User::class)-> findOneBy(['pseudo' => $credentials['pseudo']]);
+        $user = $this->entityManager->getRepository(User::class)->loadUserByIdentifier($credentials['pseudo']);
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Pseudo could not be found.');
+            throw new CustomUserMessageAuthenticationException("Le Login n'existe pas.");
         }
 
         return $user;
