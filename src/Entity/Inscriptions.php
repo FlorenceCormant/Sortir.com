@@ -69,7 +69,6 @@ class Inscriptions
     public function setUserinscription(?Participants $userinscription): self
     {
         $this->userinscription = $userinscription;
-
         return $this;
     }
 

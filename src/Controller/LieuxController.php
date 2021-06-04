@@ -25,6 +25,7 @@ class LieuxController extends AbstractController
        $form->handleRequest($request);
 
        if ($form->isSubmitted()){
+
            $entityManager->persist($lieux);
            $entityManager->flush();
 
