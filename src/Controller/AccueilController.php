@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\PropertySearch;
-use App\Entity\User;
 use App\Entity\Villes;
+use App\Entity\User;
 use App\Form\PropertySearchType;
 use App\Repository\SortiesRepository;
 use App\Repository\VillesRepository;
@@ -29,14 +29,14 @@ class AccueilController extends AbstractController
 
         $form = $this->createForm(PropertySearchType::class, $search);
         $form->handleRequest($request);
-        $sorties = $sortiesRepository->findAll();
+        $sorties = $sortiesRepository->findAll(); //On recupere toute les sorties
         if ($form->isSubmitted() && $form->isValid()) {
             $search = $form->getData();
 
-            if ($search->getNom()==null && $search->getVille() == null) {
-                $sorties = $sortiesRepository->findAll();
+            if ($search->getNom()==null && $search->getVille() == null) { //Si le formulaire est submit mais que les champs sont vide, on liste toute les sorties
+                $sorties = $sortiesRepository->date($search);
             }else {
-                $sorties = $sortiesRepository->test($search);
+                $sorties = $sortiesRepository->date($search); //Sinon on appelle la methode test (voir Sortie repository)
             }
         }
 
