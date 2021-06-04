@@ -82,7 +82,7 @@ class SortieController extends AbstractController
      * @Route("/sortie/modification/{id}", name="modificationsortie")
      */
     public function modifiersortie($id, Request $request, EntityManagerInterface $entityManager, SortiesRepository $sortiesRepository){
-
+        $maValeur = $request->request->get("valeurenregistrer");
 
 
         $sortie = $sortiesRepository->find($id);
@@ -90,8 +90,18 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted()){
+            $etat = $this->getDoctrine()
+                ->getRepository(Etats::class)
+                ->find($maValeur);
+
+            $sortie->setNoEtat($etat);
+
+
             $entityManager->persist($sortie);
             $entityManager->flush();
+
+            $this->addFlash('succes','Annonce modifié !!');
+            return $this->redirectToRoute('accueil_home');
         }
 
 
@@ -122,5 +132,33 @@ class SortieController extends AbstractController
      */
     public function annulerSortie($id, Request $request, EntityManagerInterface $entityManager, SortiesRepository $sortiesRepository): Response{
 
+
+        $sortie = $sortiesRepository->find($id);
+        $form = $this->createForm(SortieFormType::class, $sortie);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()){
+            $etat = $this->getDoctrine()
+                ->getRepository(Etats::class)
+                ->find(5);
+
+            $sortie->setNoEtat($etat);
+
+
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            $this->addFlash('succes','Annonce modifié !!');
+            return $this->redirectToRoute('accueil_home');
+        }
+
+
+
+        return $this->render('sortie/annulersortie.html.twig', [
+            'sortieForm' => $form->createView(),
+            'detailsortie' => $sortie
+        ]);
+
     }
+
 }

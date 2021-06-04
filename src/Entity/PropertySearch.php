@@ -1,6 +1,7 @@
 <?php
 namespace App\Entity;
 
+use DateTime;
 
 class PropertySearch{
 
@@ -13,6 +14,12 @@ class PropertySearch{
      * @var Villes|null
      */
     private $ville;
+
+
+    /**
+     * @var DateTime|null
+     */
+    private $date;
 
     /**
      * @return string|null
@@ -47,6 +54,24 @@ class PropertySearch{
     public function setVille(?Villes $ville): PropertySearch
     {
         $this->ville = $ville;
+        return $this;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getDate(): ?DateTime
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param DateTime|null $date
+     * @return PropertySearch
+     */
+    public function setDate(?DateTime $date): PropertySearch
+    {
+        $this->date = $date;
         return $this;
     }
 

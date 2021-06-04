@@ -1,3 +1,8 @@
+body{
+    width: 100%;
+    overflow-x: hidden;
+}
+
 .navigation_bar{ /*Gestion de la couleur de la navbar*/
     background-color: #284243;
 }
@@ -22,5 +27,11 @@
 .table_sortie{
     overflow-y: scroll;
     display: block;
-    height: 500px;
+    max-height: 500px;
+    text-align: center;
+}
+
+.table_complete{
+    width: fit-content;
+    margin: auto;
 }

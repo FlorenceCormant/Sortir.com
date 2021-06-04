@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Participants;
 use App\Entity\User;
 use App\Form\ProfilFormType;
 use App\Form\RegistrationFormType;
@@ -28,7 +29,7 @@ class RegistrationController extends AbstractController
         //  AppAuthenticator $authenticator
     ): Response
     {
-        $user = new User();
+        $user = new Participants();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
