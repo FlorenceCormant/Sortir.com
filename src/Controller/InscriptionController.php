@@ -2,12 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Etats;
 use App\Entity\Inscriptions;
+use App\Entity\Participants;
 use App\Entity\Sorties;
 use App\Form\InscriptionFormType;
+use App\Repository\ParticipantRepository;
 use App\Repository\SortiesRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,14 +22,13 @@ class InscriptionController extends AbstractController
     /**
      * @Route("/inscription/create/{id}", name="inscription")
      */
-    public function createInscription($id, Request $request, EntityManagerInterface $entityManager, SortiesRepository $sortiesRepository, UserRepository $userRepository): Response
+    public function createInscription($id, Request $request, EntityManagerInterface $entityManager, SortiesRepository $sortiesRepository,
+                                      ParticipantRepository $participantRepository, UserRepository $userRepository): Response
     {
-        $user = $this->getUser();
+        $userid = $this->getUser()->getId();
 
-
-
-        $inscription = new Inscriptions();
-
+        $user = $participantRepository->find($userid);
+dd($user);
         $sortie = $sortiesRepository->find($id);
 
         $nbInscription = $sortie->getInscriptions();

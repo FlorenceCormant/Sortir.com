@@ -24,8 +24,12 @@ class AccueilController extends AbstractController
 
         $utilisateur = $this->getUser();
 
+
+
+
         $form = $this->createForm(PropertySearchType::class, $search);
         $form->handleRequest($request);
+        $sorties = $sortiesRepository->findAll();
         if ($form->isSubmitted() && $form->isValid()) {
             $search = $form->getData();
 
@@ -39,7 +43,6 @@ class AccueilController extends AbstractController
 
         return $this->render('accueil/home.html.twig', [
             "sorties" => $sorties,
-            "villes" => $villes,
             "utilisateur" => $utilisateur,
             "form" => $form->createView()
         ]);
