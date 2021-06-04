@@ -6,6 +6,9 @@
     </div>
 
     <div>
+
+
+
         {{ form_start(form) }}
         <div class="form-row">
             <div class="col">
@@ -18,72 +21,40 @@
         </div>
         {{ form_end(form) }}
 
-        <div class="table_complete">
-            <table class="table table-hover table-stripped table-fixed table_sortie">
-                <thead>
+
+        <table class="table table-hover table-stripped table_sortie">
+            <thead>
+            <tr>
+                <th scope="col">Nom de la sortie</th>
+                <th scope="col">Date de la sortie</th>
+                <th scope="col">Clôture</th>
+                <th scope="col">Inscrit/place</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Inscrit</th>
+                <th scope="col">Organisateur</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            {% for sortie in sorties %}
+                <tbody>
                 <tr>
-                    <th scope="col">Nom de la sortie</th>
-                    <th scope="col">Date de la sortie</th>
-                    <th scope="col">Clôture</th>
-                    <th scope="col">Inscrit/place</th>
-                    <th scope="col">Etat</th>
-                    <th scope="col">Inscrit</th>
-                    <th scope="col">Organisateur</th>
-                    <th scope="col">Actions</th>
+                    <th scope="row">{{ sortie.nom }}</th>
+                    <td>{{ sortie.dateDebut|date('d/m/Y') }}</td>
+                    <td>{{ sortie.dateCloture|date('d/m/Y') }}</td>
+                    <td>{{ sortie.nbInscriptionsMax }}</td>
+                    <td>{{ sortie.noEtat.libelle }}</td>
+                    <td>{{ sortie.noLieu.noVille.nom }}</td>
+
+                    <td></td>
+                    <td>{{ sortie.organisateur.pseudo }}</td>
+                    <td><a href="{{ path('modificationsortie', {'id' : sortie.id}) }}">Modification</a><a
+                                href="{{ path('detailsortie', {'id' : sortie.id}) }}">Detail</a><a
+                                href="{{ path('annulersortie', {'id' : sortie.id}) }}">Annuler</a></td>
                 </tr>
-                </thead>
-                {% for sortie in sorties %}
-                    {# Affiche seulement les sorties qui datent de moins de 1 mois #}
-                    {% if date(sortie.dateDebut) > date("-1 months") %}
-                        <tbody>
-                        <tr>
-                            <th scope="row">{{ sortie.nom }}</th>
-                            <td>{{ sortie.dateDebut|date('d/m/Y') }}</td>
-                            <td>{{ sortie.dateCloture|date('d/m/Y') }}</td>
-                            <td>{{ sortie.nbInscriptionsMax }}</td>
-                            <td>{{ sortie.noEtat.libelle }}</td>
-                            <td>{{ sortie.noLieu.noVille.nom }}</td>
-                            <td>{{ sortie.organisateur.pseudo }}</td>
+                </tbody>
+            {% endfor %}
+        </table>
 
-                            <td><a href="{{ path('detailsortie', {'id' : sortie.id}) }}">Afficher</a>
-
-                                {# Permet la modification et l'annulation seulement si les user id et egale au user de l'utilisateur et seulement si la sortie est en cours ou en creation #}
-                                {% if sortie.noEtat.id != 3 and sortie.noEtat.id != 2 %}
-                                {% if utilisateur != null %}
-                                {% if sortie.organisateur.id == app.user.id %}
-                                <a href="{{ path('modificationsortie', {'id' : sortie.id}) }}">Modification</a>
-                                <a href="{{ path('annulersortie', {'id' : sortie.id}) }}">Annuler</a></td>
-                            {% endif %}
-                            {% endif %}
-                            {% endif %}
-
-                            {# Permet de s'inscrire seulement si la sortie est est ouverte et si l'utilisateur n'est pas l'organisateur de la sortie #}
-                            {% if sortie.noEtat.id != 2 and sortie.noEtat.id != 3  and sortie.noEtat.id != 4 and sortie.noEtat.id != 5 %}
-                                {% if utilisateur != null %}
-                                    {% if sortie.organisateur.id != app.user.id %}
-                                        {% if date(sortie.dateCloture) < date() %}
-                                            <a class="link_button"
-                                               href="{{ path('inscription', {'id' : sortie.id }) }}">S'inscrire'</a>
-                                        {% endif %}
-                                    {% endif %}
-                                {% endif %}
-                            {% endif %}
-
-                            {# Permet de se desister seulement si les inscriptions sont ouverte #}
-                            {% if sortie.noEtat.id != 2 and sortie.noEtat.id != 3  and sortie.noEtat.id != 4 and sortie.noEtat.id != 5 %}
-                                {% if utilisateur != null %}
-                                    {% if sortie.organisateur.id != app.user.id %}
-                                        <a href="">Se désister</a>
-                                    {% endif %}
-                                {% endif %}
-                            {% endif %}
-
-                        </tr>
-                        </tbody>
-                    {% endif %}
-                {% endfor %}
-            </table>
-        </div>
     </div>
     <a type="button" href="{{ path('create') }}" class="btn btn-outline-secondary">Créer une sortie</a>
 {% endblock %}

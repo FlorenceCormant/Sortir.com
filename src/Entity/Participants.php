@@ -60,7 +60,7 @@ class Participants
     private $actif;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Inscriptions::class, mappedBy="userinscription")
+     * @ORM\OneToMany(targetEntity=Inscriptions::class, mappedBy="no_participant")
      */
     private $inscriptions;
 

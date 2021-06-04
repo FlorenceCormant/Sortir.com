@@ -4,12 +4,26 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+use Doctrine\ORM\Mapping\InheritanceType;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @InheritanceType("SINGLE_TABLE")
+ * @DiscriminatorColumn(name="TYPE_ENTITE")
+ * @DiscriminatorMap({"user" = "User", "participants" = "Participants"})
+ *
+ * @UniqueEntity(fields={"pseudo"}, message="There is already an account with this pseudo")
  */
+
+// @InheritanceType("SINGLE_TABLE")
+// @DiscriminatorColumn(name="TYPE_ENTITE")
+// @DiscriminatorMap({"user" = "User", "participants" = "Participants"})
+
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
@@ -48,7 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $mail;
+    private $email;
 
     /**
      * @ORM\Column(type="string", length=15, nullable=true)
@@ -160,14 +174,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getMail(): ?string
+    public function getEmail(): ?string
     {
-        return $this->mail;
+        return $this->email;
     }
 
-    public function setMail(string $mail): self
+    public function setEmail(string $email): self
     {
-        $this->mail = $mail;
+        $this->email = $email;
 
         return $this;
     }
