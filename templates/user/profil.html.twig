@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Profil{% endblock %}
+
+{% block body %}
+
+
+    <div class="user-details">
+
+        <h1 class="h3 mb-3 font-weight-normal">Mon Profil</h1>
+
+        <label for="inputPseudo">Pseudo </label>
+        <input type="text" value="{{ last_username }}" name="pseudo" id="inputPseudo" class="form-control" autocomplete="pseudo" required autofocus>
+        <label for="inputPrenom">Prénom </label>
+        <input type="text" value="{{ last_username }}" name="pseudo" id="inputPseudo" class="form-control" autocomplete="username" required autofocus>
+        <label for="inputNom">Nom </label>
+        <label for="inputTelephone">Téléphone </label>
+        <label for="inputEmail">Email</label>
+        <label for="inputPassword">Mot de passe</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+        <label for="inputConfirmation">Confirmation</label>
+        <label for="inputVilleRattachement">Ville de rattachement</label>
+        <label for="inputPhoto">Ma photo :</label>
+
+
+
+
+
+
+
+    </div>
+
+{% endblock %}
