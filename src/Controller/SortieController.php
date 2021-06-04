@@ -23,7 +23,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/create", name="create")
      */
-    public function createSortie(Request $request,EntityManagerInterface $entityManager, ParticipantRepository $participantRepository): Response
+    public function createSortie(Request $request,EntityManagerInterface $entityManager): Response
     {
 
         $maValeur = $request->request->get("valeurenregistrer");

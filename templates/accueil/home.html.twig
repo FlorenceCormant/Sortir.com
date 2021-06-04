@@ -45,7 +45,7 @@
                     <th scope="row">{{ sortie.nom }}</th>
                     <td>{{ sortie.dateDebut|date('d/m/Y') }}</td>
                     <td>{{ sortie.dateCloture|date('d/m/Y') }}</td>
-                    <td>{{ sortie.nbInscriptionsMax }}</td>
+                    <td> {{ sortie.inscriptions.count }} / {{ sortie.nbInscriptionsMax }}</td>
                     <td>{{ sortie.noEtat.libelle }}</td>
                     <td>{{ sortie.noLieu.noVille.nom }}</td>
 
@@ -71,12 +71,14 @@
                             {% if sortie.noEtat.id != 2 and sortie.noEtat.id != 3  and sortie.noEtat.id != 4 and sortie.noEtat.id != 5 %}
                                 {% if utilisateur != null %}
                                     {% if sortie.organisateur.id != app.user.id %}
-                                        {% if date(sortie.dateCloture) < date() %}
+                                        {% if date(sortie.dateCloture) > date() %}
+                                            {% if sortie.nbInscriptionsMax > sortie.inscriptions.count %}
                                             <a class="link_button"
                                                href="{{ path('inscription', {'id' : sortie.id }) }}">S'inscrire'</a>
                                         {% endif %}
                                     {% endif %}
                                 {% endif %}
+                            {% endif %}
                             {% endif %}
 
                      {# Permet de se desister seulement si les inscriptions sont ouverte #}
@@ -91,34 +93,12 @@
                 </tbody>
                 {% endif %}
             {% endfor %}
-
         </table>
-            {% for sortie in sorties %}
-                <tbody>
-                <tr>
-                    <th scope="row">{{ sortie.nom }}</th>
-                    <td>{{ sortie.dateDebut|date('d/m/Y') }}</td>
-                    <td>{{ sortie.dateCloture|date('d/m/Y') }}</td>
-                    <td>{{ sortie.nbInscriptionsMax }}</td>
-                    <td>{{ sortie.noEtat.libelle }}</td>
-                    <td>{{ sortie.noLieu.noVille.nom }}</td>
-
-                    <td></td>
-{#
-                    <td>{{ sortie.organisateur.pseudo }}</td>
-#}
-                    <td><a href="{{ path('modificationsortie', {'id' : sortie.id}) }}">Modification</a><a
-                                href="{{ path('detailsortie', {'id' : sortie.id}) }}">Detail</a><a
-                                href="{{ path('annulersortie', {'id' : sortie.id}) }}">Annuler</a></td>
-                </tr>
-                </tbody>
-            {% endfor %}
-        </table>
-
+        <a type="button" href="{{ path('create') }}" class="btn btn-outline-secondary">Créer une sortie</a>
     </div>
 
 
-    <a type="button" href="{{ path('create') }}" class="btn btn-outline-secondary">Créer une sortie</a>
+
 {% endblock %}
 
 {% block title %}
