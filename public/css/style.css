@@ -27,7 +27,7 @@ body{
 .table_sortie{
     overflow-y: scroll;
     display: block;
-    max-height: 200px;
+    max-height: 500px;
     text-align: center;
 }
 

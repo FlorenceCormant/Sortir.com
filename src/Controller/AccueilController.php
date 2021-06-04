@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Participants;
 use App\Entity\PropertySearch;
 use App\Entity\Villes;
 use App\Form\PropertySearchType;
+use App\Repository\ParticipantsRepository;
 use App\Repository\SortiesRepository;
 use App\Repository\VillesRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +20,7 @@ class AccueilController extends AbstractController
     /**
      * @Route("/", name="accueil_home")
      */
-    public function home(SortiesRepository $sortiesRepository, Request $request): Response
+    public function home(SortiesRepository $sortiesRepository, Request $request, ParticipantsRepository  $participantsRepository, EntityManagerInterface $entityManager): Response
     {
         $search = new PropertySearch();
 
@@ -29,10 +32,10 @@ class AccueilController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $search = $form->getData();
 
-            if ($search->getNom()==null && $search->getVille() == null) {
+            if ($search->getNom()==null && $search->getVille() == null && $search->getDate() == null) {
                 $sorties = $sortiesRepository->findAll();
             }else {
-                $sorties = $sortiesRepository->test($search);
+                $sorties = $sortiesRepository->form($search);
             }
         }
 

@@ -28,7 +28,6 @@ class Inscriptions
      */
     private $userinscription;
 
-
     public function __construct()
     {
         $this->no_participant = new ArrayCollection();

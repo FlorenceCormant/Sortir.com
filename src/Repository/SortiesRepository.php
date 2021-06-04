@@ -54,11 +54,10 @@ class SortiesRepository extends ServiceEntityRepository
     public function date(PropertySearch $search)
     {
         $qb = $this->createQueryBuilder('s')
-            ->where("s.date_debut = :date")
+            ->where("DATE(s.date_debut) = DATE(:date)")
             ->setParameter('date', $search->getDate())
             ->getQuery()
             ->getResult();
-
         return $qb;
 
     }
@@ -73,6 +72,8 @@ class SortiesRepository extends ServiceEntityRepository
             ->setParameter('ville', $search->getVille()->getId())
             ->andWhere('s.nom LIKE :word')
             ->setParameter('word', '%' . $search->getNom() . '%')
+            ->andWhere("DATE(s.date_debut) = DATE(:date)")
+            ->setParameter('date', $search->getDate())
             ->getQuery()
             ->getResult();
 
@@ -82,21 +83,27 @@ class SortiesRepository extends ServiceEntityRepository
 //Methode pour le submit du formulaire
     public function form(PropertySearch $search)
     {
-        if ($search->getNom() != null && $search->getVille() != null) {
-            $test1 = $this->global($search);
-            return $test1;
-
-        } else if ($search->getNom() == null && $search->getVille() != null) {
-            $test2 = $this->ville($search);
-            return $test2;
-        } else if ($search->getNom() != null && $search->getVille() == null) {
-            $test3 = $this->motCle($search);
-            return $test3;
+        if ($search->getNom() != null && $search->getVille() != null && $search->getDate() != null) {
+            $requete = $this->global($search);
+            return $requete;
+        } else if ($search->getNom() == null && $search->getVille() != null && $search->getDate() == null) {
+            $requete = $this->ville($search);
+            return $requete;
+        } else if ($search->getNom() != null && $search->getVille() == null && $search->getDate() == null) {
+            $requete = $this->motCle($search);
+            return $requete;
+        } else if ($search->getNom() == null && $search->getVille() == null && $search->getDate() != null) {
+            $requete = $this->date($search);
+            return $requete;
+        } else if ($search->getNom() == null && $search->getVille() != null && $search->getDate() != null) {
+            $requete = $this->global($search);
+            return $requete;
         } else {
-            return '';
-        }
 
+        return '';
     }
+
+}
 
 
 }
