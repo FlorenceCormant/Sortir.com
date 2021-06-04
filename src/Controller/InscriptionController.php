@@ -28,13 +28,15 @@ class InscriptionController extends AbstractController
         $userid = $this->getUser()->getId();
 
         $user = $participantRepository->find($userid);
-dd($user);
+
         $sortie = $sortiesRepository->find($id);
 
         $nbInscription = $sortie->getInscriptions();
         $nombreInscritionMax = $sortie->getNbInscriptionsMax();
 
-        $inscription = new Inscriptions();
+
+        if (count($nbInscription) < $nombreInscritionMax) {
+            $inscription = new Inscriptions();
 
             $inscription->setUserinscription($user);
             $inscription->setDateInscription(new \DateTime());
@@ -43,6 +45,7 @@ dd($user);
             $entityManager->persist($inscription);
             $entityManager->flush();
 
+        }
 
         return $this->redirectToRoute('accueil_home');
     }

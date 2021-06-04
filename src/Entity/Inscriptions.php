@@ -30,10 +30,7 @@ class Inscriptions
      */
     private $userinscription;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Participants::class, inversedBy="userinscription")
-     */
-    private $userinscription;
+
 
 
 
@@ -54,14 +51,6 @@ class Inscriptions
         $this->date_inscription = $date_inscription;
         return $this;
     }
-
-        return $this;
-    }
-
-
-
-
-
 
 
     public function getNoSortie(): ?sorties
@@ -84,15 +73,5 @@ class Inscriptions
         return $this;
     }
 
-    public function getUserinscription(): ?Participants
-    {
-        return $this->userinscription;
-    }
 
-    public function setUserinscription(?Participants $userinscription): self
-    {
-        $this->userinscription = $userinscription;
-
-        return $this;
-    }
 }

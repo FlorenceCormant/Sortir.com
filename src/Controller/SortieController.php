@@ -25,6 +25,9 @@ class SortieController extends AbstractController
      */
     public function createSortie(Request $request,EntityManagerInterface $entityManager, ParticipantRepository $participantRepository): Response
     {
+
+        $maValeur = $request->request->get("valeurenregistrer");
+
         $userid = $this->getUser()->getId();
 
 
@@ -35,7 +38,6 @@ class SortieController extends AbstractController
              ->find($userid);
 
 
-        dd($organisateur);
 
         $sortie->setOrganisateur($organisateur);
 
