@@ -6,7 +6,9 @@ use App\Entity\Etats;
 use App\Entity\Participants;
 use App\Entity\Sorties;
 use App\Form\SortieFormType;
+use App\Repository\ParticipantRepository;
 use App\Repository\SortiesRepository;
+use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,14 +25,19 @@ class SortieController extends AbstractController
      */
     public function createSortie(Request $request,EntityManagerInterface $entityManager): Response
     {
+
         $maValeur = $request->request->get("valeurenregistrer");
+
+        $userid = $this->getUser()->getId();
+
 
         $sortie = new Sorties();
 
-
-        $organisateur = $this->getDoctrine()
+        $organisateur = $this->getDoctrine()->getManager()
             ->getRepository(Participants::class)
-            ->find(1);
+             ->find($userid);
+
+
 
         $sortie->setOrganisateur($organisateur);
 
@@ -157,6 +164,20 @@ class SortieController extends AbstractController
         return $this->render('sortie/annulersortie.html.twig', [
             'sortieForm' => $form->createView(),
             'detailsortie' => $sortie
+        ]);
+
+    }
+
+
+    /**
+     * @Route("/sortie/detailparticipant/{id}", name="detailparticipant")
+     */
+    public function detailparticipant($id, SortiesRepository $sortiesRepository){
+
+        $sortie = $sortiesRepository->find($id);
+
+        return $this->render('sortie/afficherparticipant.html.twig',[
+            'detailparticipant' => $sortie
         ]);
 
     }

@@ -26,6 +26,9 @@ class AccueilController extends AbstractController
 
         $utilisateur = $this->getUser();
 
+
+
+
         $form = $this->createForm(PropertySearchType::class, $search);
         $form->handleRequest($request);
         $sorties = $sortiesRepository->findAll(); //On recupere toute les sorties
