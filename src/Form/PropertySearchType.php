@@ -40,25 +40,25 @@ class PropertySearchType extends AbstractType
                 'widget' => 'single_text',
                 'label' => 'Sortie à cette date',
             ])
-            ->add('sortieOrg',CheckboxType::class,[
+            ->add('orga',CheckboxType::class,[
                 'label' => "Sortie dont je suis l'organisateur/trice",
                 'required' => false,
-                'mapped' =>false,
+
             ])
-            ->add('SortieInsc',CheckboxType::class,[
+            ->add('inscrit',CheckboxType::class,[
                 'label' => "Sorties auxquelles je suis inscrit/e",
                 'required' => false,
-                'mapped' =>false,
+
             ])
-            ->add('SortieNoInsc',CheckboxType::class,[
+            ->add('pasInscrit',CheckboxType::class,[
                 'label' => "Sorties auxquelles je suis ne suis pas inscrit/e",
                 'required' => false,
-                'mapped' =>false,
+
             ])
-            ->add('SortiePass',CheckboxType::class,[
+            ->add('passe',CheckboxType::class,[
                 'label' => "Sorties passées",
                 'required' => false,
-                'mapped' =>false,
+
             ]);
     }
 

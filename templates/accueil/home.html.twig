@@ -3,7 +3,9 @@
 {% block body %}
     <div class="date_jour">
         Date du jour : {{ "now"|date('d/m/Y') }}
+        {% if utilisateur != null %}
         Participant : {{ utilisateur.username }}
+        {% endif %}
     </div>
 
     <div>
