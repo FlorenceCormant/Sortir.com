@@ -34,6 +34,12 @@ class PropertySearchType extends AbstractType
                 'choice_label' => 'nom',
                 'placeholder' => "Ville"
             ])
+
+            ->add('date',DateType::class,[
+                'required'=>false,
+                'widget' => 'single_text',
+                'label' => 'Sortie à cette date',
+            ])
             ->add('sortieOrg',CheckboxType::class,[
                 'label' => "Sortie dont je suis l'organisateur/trice",
                 'required' => false,
@@ -53,11 +59,6 @@ class PropertySearchType extends AbstractType
                 'label' => "Sorties passées",
                 'required' => false,
                 'mapped' =>false,
-            ])
-            ->add('date',DateType::class,[
-                'required'=>false,
-                'widget' => 'single_text',
-                'label' => 'Sortie à cette date',
             ]);
     }
 
