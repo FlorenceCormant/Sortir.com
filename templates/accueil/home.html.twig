@@ -3,6 +3,7 @@
 {% block body %}
     <div class="date_jour">
         Date du jour : {{ "now"|date('d/m/Y') }}
+        Participant : {{ utilisateur.username }}
     </div>
 
     <div>
@@ -20,6 +21,7 @@
 
         </div>
         {{ form_end(form) }}
+        <button class="btn btn-primary reset" onclick="reset()">Reset</button>
 
 
         <table class="table table-hover table-stripped table_sortie">

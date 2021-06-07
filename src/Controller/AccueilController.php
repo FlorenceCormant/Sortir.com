@@ -35,7 +35,7 @@ class AccueilController extends AbstractController
             if ($search->getNom()==null && $search->getVille() == null && $search->getDate() == null) {
                 $sorties = $sortiesRepository->findAll();
             }else {
-                $sorties = $sortiesRepository->form($search);
+                $sorties = $sortiesRepository->global($search);
             }
         }
 
