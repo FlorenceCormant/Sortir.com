@@ -61,41 +61,34 @@ class InscriptionController extends AbstractController
     }
 
 
+    /**
+     * @Route("/inscription/delete/{id}", name="deleteinscription")
+     */
     public function desistement($id, Request $request, EntityManagerInterface $entityManager, SortiesRepository $sortiesRepository,
                                 ParticipantsRepository $participantRepository,InscriptionsRepository $inscriptionsRepository,EtatsRepository $etatsRepository, UserRepository $userRepository){
 
-        $etat = $etatsRepository->find(1);
 
         $userid = $this->getUser()->getId();
-
         $user = $participantRepository->find($userid);
 
         $sortie = $sortiesRepository->find($id);
+        $numeroetat = $sortie->getNoEtat()->getId();
+        $etat = $etatsRepository->find(1);
 
         $nbInscription = $sortie->getInscriptions();
         $nombreInscritionMax = $sortie->getNbInscriptionsMax();
 
-
-
-
-
-
-        if (count($nbInscription) < $nombreInscritionMax) {
-            $inscription = new Inscriptions();
-
-            $inscription->setUserinscription($user);
-            $inscription->setDateInscription(new \DateTime());
-            $inscription->setNoSortie($sortie);
-
-            if (count($nbInscription)+1 === $nombreInscritionMax){
-                $sortie->setNoEtat($etat);
-                $entityManager->flush();
-            }
-
-            $entityManager->persist($inscription);
-            $entityManager->flush();
-
+        if (count($nbInscription)-1 < $nombreInscritionMax && $numeroetat === 2){
+            $sortie->setNoEtat($etat);
+            $entityManager->persist($sortie);
         }
+
+        $inscriptionsupprimer = $inscriptionsRepository->deleteSortie($id, $user);
+
+        foreach ($inscriptionsupprimer as $suppresion){
+            $entityManager->remove($suppresion);
+        }
+        $entityManager->flush();
 
         return $this->redirectToRoute('accueil_home');
     }
