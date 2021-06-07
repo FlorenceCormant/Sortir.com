@@ -9,9 +9,11 @@
                 <a class="nav-link active" aria-current="page" href="{{ path('accueil_home') }}">Accueil</a>
                 <a class="nav-link" href="{# TODO #}">Villes</a>
                 <a class="nav-link" href="{# TODO #}">Sites</a>
-                <a class="nav-link" href="{# TODO #}">Mon profil</a>
+                {% if app.user != null %}
+                <a class="nav-link" href="{{ path('user_profil',{'id' : app.user.id}) }}">Mon profil</a>
+                {% endif %}
                 <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
-                <a class="nav-link" href="">Créer un compte</a>
+                <a class="nav-link" href="{{ path('app_register') }}">Créer un compte</a>
                 <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
 
             </div>

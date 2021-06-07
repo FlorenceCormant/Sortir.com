@@ -1,18 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil{% endblock %}
+{% block title %}{{ parent() }} | Profil de {{ user.username }}{% endblock %}
 
 {% block body %}
     {% for flashError in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}
 
-    <h1>Mon Profil</h1>
+    <h1>{{ user.pseudo }}</h1>
 
-    {{ form_start(profilForm) }}
-    {{ form_widget(profilForm) }}
+    <div>
+        <div>Prénom : {{ user.prenom | capitalize }} </div>
+
+        <div>Nom : {{ user.nom| capitalize }}</div>
+
+        <div>Téléphone : {{ user.telephone| capitalize }}</div>
+
+        <div>Email : {{ user.email| capitalize }}</div>
+
+        <div>Ville de rattachement : {{ user.villes.nom| capitalize }}</div>
+
+        <a href="{{ path('accueil_home') }}"><button type="button">Retour</button></a>
+
+    </div>
 
 
-    <button type="submit" class="btn">Enregistrer</button>
-    {{ form_end(profilForm) }}
 {% endblock %}

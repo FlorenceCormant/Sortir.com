@@ -30,15 +30,15 @@ class RegistrationController extends AbstractController
     ): Response
     {
         $user = new Participants();
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
+        $registrationForm = $this->createForm(RegistrationFormType::class, $user);
+        $registrationForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($registrationForm->isSubmitted() && $registrationForm->isValid()) {
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $registrationForm->get('plainPassword')->getData()
                 )
             );
 
@@ -59,7 +59,26 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+            'registrationForm' => $registrationForm->createView(),
+            'user'=>$user
+        ]);
+    }
+
+
+    /**
+     * @Route("/user/{id}", name="user_profil", requirements={"id"="\d+"})
+     */
+    public function userProfil($id, UserRepository $userRepository)
+    {
+
+        $user = $userRepository->find($id);
+        dump($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException('Utilisateur inconnu');
+        }
+        return $this->render('user/profil.html.twig', [
+            'user'=> $user
         ]);
     }
 
