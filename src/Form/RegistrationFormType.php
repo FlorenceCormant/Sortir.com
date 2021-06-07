@@ -2,10 +2,15 @@
 
 namespace App\Form;
 
+use App\Entity\Participants;
+use App\Entity\Sites;
 use App\Entity\User;
+use App\Entity\Villes;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -22,8 +27,13 @@ class RegistrationFormType extends AbstractType
             ->add("nom")
             ->add("telephone")
             ->add("email")
-            ->add('plainPassword', PasswordType::class, [
+            ->add('plainPassword', RepeatedType::class, [
                 'label' => 'Mot de Passe',
+                'type'=> PasswordType::class,
+                'first_options'=>['label'=>'Mot de passe'],
+                'second_options'=>['label'=>'Confirmation'],
+                'required'=>true,
+                'invalid_message'=>'Les mots de passe doivent être identiques.',
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
@@ -40,6 +50,11 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+           ->add('villes', EntityType::class, [
+                'label' =>'Ville de rattachement',
+                'class' => Villes::class,
+                'choice_label' => 'nom',
+            ])
             /*  ->add('agreeTerms', CheckboxType::class, [
                   'mapped' => false,
                   'constraints' => [
@@ -54,7 +69,7 @@ class RegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => Participants::class,
         ]);
     }
 }

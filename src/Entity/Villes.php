@@ -27,16 +27,22 @@ class Villes
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $code_postal;
+    private $code_Postal;
 
     /**
      * @ORM\OneToMany(targetEntity=Lieux::class, mappedBy="no_ville")
      */
     private $lieuxes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Participants::class, mappedBy="Villes")
+     */
+    private $participants;
+
     public function __construct()
     {
         $this->lieuxes = new ArrayCollection();
+        $this->participants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -58,12 +64,12 @@ class Villes
 
     public function getCodePostal(): ?string
     {
-        return $this->code_postal;
+        return $this->code_Postal;
     }
 
-    public function setCodePostal(string $code_postal): self
+    public function setCodePostal(string $code_Postal): self
     {
-        $this->code_postal = $code_postal;
+        $this->code_Postal = $code_Postal;
 
         return $this;
     }
@@ -92,6 +98,36 @@ class Villes
             // set the owning side to null (unless already changed)
             if ($lieux->getNoVille() === $this) {
                 $lieux->setNoVille(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Participants[]
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(Participants $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+            $participant->setVilles($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(Participants $participant): self
+    {
+        if ($this->participants->removeElement($participant)) {
+            // set the owning side to null (unless already changed)
+            if ($participant->getVilles() === $this) {
+                $participant->setVilles(null);
             }
         }
 

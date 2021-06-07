@@ -1,33 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} | Profil{% endblock %}
+{% block title %}{{ parent() }} | Profil de {{ user.username }}{% endblock %}
 
 {% block body %}
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
 
+    <h1>{{ user.pseudo }}</h1>
 
-    <div class="user-details">
+    <div>
+        <div>Prénom : {{ user.prenom | capitalize }} </div>
 
-        <h1 class="h3 mb-3 font-weight-normal">Mon Profil</h1>
+        <div>Nom : {{ user.nom| capitalize }}</div>
 
-        <label for="inputPseudo">Pseudo </label>
-        <input type="text" value="{{ last_username }}" name="pseudo" id="inputPseudo" class="form-control" autocomplete="pseudo" required autofocus>
-        <label for="inputPrenom">Prénom </label>
-        <input type="text" value="{{ last_username }}" name="pseudo" id="inputPseudo" class="form-control" autocomplete="username" required autofocus>
-        <label for="inputNom">Nom </label>
-        <label for="inputTelephone">Téléphone </label>
-        <label for="inputEmail">Email</label>
-        <label for="inputPassword">Mot de passe</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-        <label for="inputConfirmation">Confirmation</label>
-        <label for="inputVilleRattachement">Ville de rattachement</label>
-        <label for="inputPhoto">Ma photo :</label>
+        <div>Téléphone : {{ user.telephone| capitalize }}</div>
 
+        <div>Email : {{ user.email| capitalize }}</div>
 
+        <div>Ville de rattachement : {{ user.villes.nom| capitalize }}</div>
 
-
-
-
+        <a href="{{ path('accueil_home') }}"><button type="button">Retour</button></a>
 
     </div>
+
 
 {% endblock %}

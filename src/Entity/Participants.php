@@ -34,11 +34,12 @@ class Participants extends User
      */
     private $sorties;
 
-    public function __construct()
-    {
-        $this->inscriptions = new ArrayCollection();
-        $this->sorties = new ArrayCollection();
-    }
+    /**
+     * @ORM\ManyToOne(targetEntity=Villes::class, inversedBy="participants")
+     */
+    private $villes;
+
+
 
 
 
@@ -122,4 +123,18 @@ class Participants extends User
 
         return $this;
     }
+
+    public function getVilles(): ?Villes
+    {
+        return $this->villes;
+    }
+
+    public function setVilles(?Villes $villes): self
+    {
+        $this->villes = $villes;
+
+        return $this;
+    }
+
+
 }
