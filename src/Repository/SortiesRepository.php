@@ -4,10 +4,12 @@ namespace App\Repository;
 
 use App\Entity\PropertySearch;
 use App\Entity\Sorties;
+use App\Entity\User;
 use App\Form\PropertySearchType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method Sorties|null find($id, $lockMode = null, $lockVersion = null)
@@ -62,48 +64,50 @@ class SortiesRepository extends ServiceEntityRepository
 
     }
 
-//Methode pour requeter les 2 requetes precedente en meme temps et donc recupere les sorties ou le lieu et le nom correspondent à la sortie
-    public function global(PropertySearch $search)
+    public function orga($user)
     {
         $qb = $this->createQueryBuilder('s')
-            ->leftJoin('s.no_lieu', 'noLieu')
-            ->leftJoin('noLieu.no_ville', 'ville')
-            ->Where('noLieu.no_ville = :ville')
-            ->setParameter('ville', $search->getVille()->getId())
-            ->andWhere('s.nom LIKE :word')
-            ->setParameter('word', '%' . $search->getNom() . '%')
-            ->andWhere("DATE(s.date_debut) = DATE(:date)")
-            ->setParameter('date', $search->getDate())
+            ->where('s.organisateur = :orga')
+            ->setParameter('orga', $user)
+            ->getQuery()
+            ->getResult();
+        return $qb;
+    }
+
+    public function passe()
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->where('s.date_cloture < :date')
+            ->setParameter('date', new \DateTime('now') )
             ->getQuery()
             ->getResult();
 
         return $qb;
     }
 
-//Methode pour le submit du formulaire
-    public function form(PropertySearch $search)
+//Methode pour requeter les 2 requetes precedente en meme temps et donc recupere les sorties ou le lieu et le nom correspondent à la sortie
+    public function global(PropertySearch $search, $user)
     {
-        if ($search->getNom() != null && $search->getVille() != null && $search->getDate() != null) {
-            $requete = $this->global($search);
-            return $requete;
-        } else if ($search->getNom() == null && $search->getVille() != null && $search->getDate() == null) {
-            $requete = $this->ville($search);
-            return $requete;
-        } else if ($search->getNom() != null && $search->getVille() == null && $search->getDate() == null) {
+        if ($search->getNom() !== null) {
             $requete = $this->motCle($search);
             return $requete;
-        } else if ($search->getNom() == null && $search->getVille() == null && $search->getDate() != null) {
+        }
+        if ($search->getVille() !== null) {
+            $requete = $this->ville($search);
+            return $requete;
+        }
+        if ($search->getDate() !== null) {
             $requete = $this->date($search);
             return $requete;
-        } else if ($search->getNom() == null && $search->getVille() != null && $search->getDate() != null) {
-            $requete = $this->global($search);
+        }
+        if ($search->getOrga() !== null) {
+            $requete = $this->orga($user);
             return $requete;
-        } else {
-
+        }
+        if ($search->getPasse() !== null) {
+            $requete = $this->passe();
+            return $requete;
+        }
         return '';
     }
-
-}
-
-
 }

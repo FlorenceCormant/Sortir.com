@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Inscriptions;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,32 +20,18 @@ class InscriptionsRepository extends ServiceEntityRepository
         parent::__construct($registry, Inscriptions::class);
     }
 
-    // /**
-    //  * @return Inscriptions[] Returns an array of Inscriptions objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('i.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Inscriptions
-    {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+    public function deleteSortie($sortieid, $userid){
+        $queryBuilder = $this->createQueryBuilder('s')
+            ->where('s.no_sortie =?1')
+            ->andWhere('s.userinscription =?2')
+              ->setParameter(1, $sortieid)
+                ->setParameter(2, $userid)
+
+             ->getQuery()
+            ->getResult();
+
+            return $queryBuilder;
     }
-    */
 }
+

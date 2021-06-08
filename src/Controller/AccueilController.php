@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Participants;
 use App\Entity\PropertySearch;
+use App\Entity\User;
 use App\Entity\Villes;
 use App\Form\PropertySearchType;
 use App\Repository\ParticipantsRepository;
@@ -20,7 +21,7 @@ class AccueilController extends AbstractController
     /**
      * @Route("/", name="accueil_home")
      */
-    public function home(SortiesRepository $sortiesRepository, Request $request, ParticipantsRepository  $participantsRepository, EntityManagerInterface $entityManager): Response
+    public function home(SortiesRepository $sortiesRepository, Request $request, ParticipantsRepository  $participantsRepository, EntityManagerInterface $entityManager ): Response
     {
         $search = new PropertySearch();
 
@@ -32,10 +33,10 @@ class AccueilController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $search = $form->getData();
 
-            if ($search->getNom()==null && $search->getVille() == null && $search->getDate() == null) {
+            if ($search->getNom()==null && $search->getVille() == null && $search->getDate() == null && $search->getOrga() == null && $search->getPasse() == null) {
                 $sorties = $sortiesRepository->findAll();
             }else {
-                $sorties = $sortiesRepository->form($search);
+                $sorties = $sortiesRepository->global($search,$utilisateur);
             }
         }
 

@@ -34,30 +34,31 @@ class PropertySearchType extends AbstractType
                 'choice_label' => 'nom',
                 'placeholder' => "Ville"
             ])
-            ->add('sortieOrg',CheckboxType::class,[
-                'label' => "Sortie dont je suis l'organisateur/trice",
-                'required' => false,
-                'mapped' =>false,
-            ])
-            ->add('SortieInsc',CheckboxType::class,[
-                'label' => "Sorties auxquelles je suis inscrit/e",
-                'required' => false,
-                'mapped' =>false,
-            ])
-            ->add('SortieNoInsc',CheckboxType::class,[
-                'label' => "Sorties auxquelles je suis ne suis pas inscrit/e",
-                'required' => false,
-                'mapped' =>false,
-            ])
-            ->add('SortiePass',CheckboxType::class,[
-                'label' => "Sorties passées",
-                'required' => false,
-                'mapped' =>false,
-            ])
+
             ->add('date',DateType::class,[
                 'required'=>false,
                 'widget' => 'single_text',
                 'label' => 'Sortie à cette date',
+            ])
+            ->add('orga',CheckboxType::class,[
+                'label' => "Sortie dont je suis l'organisateur/trice",
+                'required' => false,
+
+            ])
+            ->add('inscrit',CheckboxType::class,[
+                'label' => "Sorties auxquelles je suis inscrit/e",
+                'required' => false,
+
+            ])
+            ->add('pasInscrit',CheckboxType::class,[
+                'label' => "Sorties auxquelles je suis ne suis pas inscrit/e",
+                'required' => false,
+
+            ])
+            ->add('passe',CheckboxType::class,[
+                'label' => "Sorties passées",
+                'required' => false,
+
             ]);
     }
 

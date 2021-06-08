@@ -19,6 +19,8 @@ class Inscriptions
      * @ORM\Column(type="datetime")
      */
     private $date_inscription;
+
+
     /**
      * @ORM\ManyToOne(targetEntity=sorties::class, inversedBy="inscriptions")
      */
@@ -27,6 +29,10 @@ class Inscriptions
      * @ORM\ManyToOne(targetEntity=Participants::class, inversedBy="userinscription")
      */
     private $userinscription;
+
+
+
+
 
     public function __construct()
     {
@@ -45,6 +51,8 @@ class Inscriptions
         $this->date_inscription = $date_inscription;
         return $this;
     }
+
+
     public function getNoSortie(): ?sorties
     {
         return $this->no_sortie;
@@ -63,4 +71,6 @@ class Inscriptions
         $this->userinscription = $userinscription;
         return $this;
     }
+
+
 }

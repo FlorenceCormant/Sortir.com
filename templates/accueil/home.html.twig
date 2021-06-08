@@ -3,9 +3,14 @@
 {% block body %}
     <div class="date_jour">
         Date du jour : {{ "now"|date('d/m/Y') }}
+        {% if utilisateur != null %}
+        Participant : {{ utilisateur.username }}
+        {% endif %}
     </div>
 
     <div>
+
+
 
 
 
@@ -20,6 +25,7 @@
 
         </div>
         {{ form_end(form) }}
+        <button class="btn btn-primary reset" onclick="reset()">Reset</button>
 
 
         <table class="table table-hover table-stripped table_sortie">
@@ -36,32 +42,66 @@
             </tr>
             </thead>
             {% for sortie in sorties %}
+            {# Affiche seulement les sorties qui datent de moins de 1 mois #}
+            {% if date(sortie.dateDebut) > date("-1 months") %}
                 <tbody>
                 <tr>
                     <th scope="row">{{ sortie.nom }}</th>
                     <td>{{ sortie.dateDebut|date('d/m/Y') }}</td>
                     <td>{{ sortie.dateCloture|date('d/m/Y') }}</td>
-                    <td>{{ sortie.nbInscriptionsMax }}</td>
+                    <td> {{ sortie.inscriptions.count }} / {{ sortie.nbInscriptionsMax }}</td>
                     <td>{{ sortie.noEtat.libelle }}</td>
                     <td>{{ sortie.noLieu.noVille.nom }}</td>
+                    <td><a href="{{ path('detailparticipant', {'id' : sortie.id}) }}">{{ sortie.organisateur.pseudo}}</a></td>
+                    <td><a href="{{ path('detailsortie', {'id' : sortie.id}) }}">Afficher</a>
 
-                    <td></td>
-{#
-                    <td>{{ sortie.organisateur.pseudo }}</td>
-#}
-                    <td><a href="{{ path('modificationsortie', {'id' : sortie.id}) }}">Modification</a><a
-                                href="{{ path('detailsortie', {'id' : sortie.id}) }}">Detail</a><a
-                                href="{{ path('annulersortie', {'id' : sortie.id}) }}">Annuler</a></td>
+
+                                {# Permet la modification et l'annulation seulement si les user id et egale au user de l'utilisateur et seulement si la sortie est en cours ou en creation #}
+                                {% if sortie.noEtat.id != 3 and sortie.noEtat.id != 2 %}
+                                {% if utilisateur != null %}
+                                {% if sortie.organisateur.id == app.user.id %}
+                                <a href="{{ path('modificationsortie', {'id' : sortie.id}) }}">Modification</a>
+                                <a href="{{ path('annulersortie', {'id' : sortie.id}) }}">Annuler</a></td>
+                            {% endif %}
+                            {% endif %}
+                            {% endif %}
+
+                            {# Permet de s'inscrire seulement si la sortie est est ouverte et si l'utilisateur n'est pas l'organisateur de la sortie #}
+                            {% if sortie.noEtat.id != 2 and sortie.noEtat.id != 3  and sortie.noEtat.id != 4 and sortie.noEtat.id != 5 %}
+                                {% if utilisateur != null %}
+                                    {% if sortie.organisateur.id != app.user.id %}
+                                        {% if date(sortie.dateCloture) > date() %}
+                                            {% if sortie.nbInscriptionsMax > sortie.inscriptions.count %}
+                                            <a class="link_button" href="{{ path('inscription', {'id' : sortie.id }) }}">S'inscrire</a>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                            {% endif %}
+
+                     {# Permet de se desister seulement si les inscriptions sont ouverte ou fermer #}
+                    {%  if sortie.noEtat.id != 3  and sortie.noEtat.id != 4 and sortie.noEtat.id != 5  %}
+                    {% if utilisateur != null %}
+                    {% if sortie.organisateur.id != app.user.id%}
+                        <a class="link_button" href="{{ path('deleteinscription', {'id' : sortie.id }) }}">Se desister</a>
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}
                 </tr>
                 </tbody>
+                {% endif %}
             {% endfor %}
         </table>
-
+        <a type="button" href="{{ path('create') }}" class="btn btn-outline-secondary">Créer une sortie</a>
     </div>
-    <a type="button" href="{{ path('create') }}" class="btn btn-outline-secondary">Créer une sortie</a>
+
+
+
 {% endblock %}
 
 {% block title %}
 
 {% endblock %}
+
+
 

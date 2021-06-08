@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Entity;
 
 use DateTime;
 
-class PropertySearch{
+class PropertySearch
+{
 
     /**
      * @var string|null
@@ -20,6 +22,26 @@ class PropertySearch{
      * @var DateTime|null
      */
     private $date;
+
+    /**
+     * @var boolean|null
+     */
+    private $orga;
+
+    /**
+     * @var boolean|null
+     */
+    private $inscrit;
+
+    /**
+     * @var boolean|null
+     */
+    private $pasInscrit;
+
+    /**
+     * @var boolean|null
+     */
+    private $passe;
 
     /**
      * @return string|null
@@ -75,8 +97,77 @@ class PropertySearch{
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
+    public function getOrga(): ?bool
+    {
+        return $this->orga;
+    }
 
+    /**
+     * @param bool|null $orga
+     * @return PropertySearch
+     */
+    public function setOrga(?bool $orga): PropertySearch
+    {
+        $this->orga = $orga;
+        return $this;
+    }
 
+    /**
+     * @return bool|null
+     */
+    public function getInscrit(): ?bool
+    {
+        return $this->inscrit;
+    }
+
+    /**
+     * @param bool|null $inscrit
+     * @return PropertySearch
+     */
+    public function setInscrit(?bool $inscrit): PropertySearch
+    {
+        $this->inscrit = $inscrit;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getPasInscrit(): ?bool
+    {
+        return $this->pasInscrit;
+    }
+
+    /**
+     * @param bool|null $pasInscrit
+     * @return PropertySearch
+     */
+    public function setPasInscrit(?bool $pasInscrit): PropertySearch
+    {
+        $this->pasInscrit = $pasInscrit;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getPasse(): ?bool
+    {
+        return $this->passe;
+    }
+
+    /**
+     * @param bool|null $passe
+     * @return PropertySearch
+     */
+    public function setPasse(?bool $passe): PropertySearch
+    {
+        $this->passe = $passe;
+        return $this;
+    }
 
 
 }
