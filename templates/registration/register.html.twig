@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme registrationForm 'bootstrap_4_layout.html.twig' %}
+
 {% block title %}Mon Profil{% endblock %}
 
 {% block body %}
@@ -11,8 +13,7 @@
 
     {{ form_start(registrationForm) }}
       {{ form_widget(registrationForm) }}
-    {#{{form_row(registrationForm.agreeTerms) }}#}
-{# {{ form_row(registrationForm.site) }} #}
+
 
     <button type="submit" class="btn">Enregistrer</button>
     <a href="{{ path('accueil_home') }}"><button type="button">Retour</button></a>
