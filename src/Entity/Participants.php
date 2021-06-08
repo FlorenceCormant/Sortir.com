@@ -43,6 +43,14 @@ class Participants extends User
 
 
 
+    public function __construct()
+    {
+        $this->inscriptions = new ArrayCollection();
+        $this->sorties = new ArrayCollection();
+    }
+
+
+
     public function getAdministrateur(): ?bool
     {
         return $this->administrateur;
@@ -135,6 +143,8 @@ class Participants extends User
 
         return $this;
     }
+
+
 
 
 }

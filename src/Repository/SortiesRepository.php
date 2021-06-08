@@ -25,6 +25,9 @@ class SortiesRepository extends ServiceEntityRepository
         parent::__construct($registry, Sorties::class);
     }
 
+    // /**
+    //  * @return Sorties[] Returns an array of Sorties objects
+    //  */
 
     public function total(PropertySearch $search, $user)
     {
