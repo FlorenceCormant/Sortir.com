@@ -34,6 +34,9 @@ class Participants extends User
      */
     private $sorties;
 
+
+
+
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
@@ -122,4 +125,6 @@ class Participants extends User
 
         return $this;
     }
+
+
 }

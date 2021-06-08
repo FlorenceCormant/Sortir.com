@@ -6,10 +6,13 @@ use App\Entity\Participants;
 use App\Entity\PropertySearch;
 use App\Entity\Villes;
 use App\Form\PropertySearchType;
+use App\Repository\InscriptionsRepository;
 use App\Repository\ParticipantsRepository;
 use App\Repository\SortiesRepository;
+use App\Repository\UserRepository;
 use App\Repository\VillesRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,11 +23,14 @@ class AccueilController extends AbstractController
     /**
      * @Route("/", name="accueil_home")
      */
-    public function home(SortiesRepository $sortiesRepository, Request $request, ParticipantsRepository  $participantsRepository, EntityManagerInterface $entityManager): Response
+    public function home(SortiesRepository $sortiesRepository, Request $request, ParticipantsRepository  $participantsRepository, EntityManagerInterface $entityManager, InscriptionsRepository $inscriptionsRepository): Response
     {
         $search = new PropertySearch();
 
         $utilisateur = $this->getUser();
+
+        $inscr = $inscriptionsRepository->findAll();
+
 
 
 
@@ -44,9 +50,12 @@ class AccueilController extends AbstractController
 
 
         return $this->render('accueil/home.html.twig', [
+           "inscription" => $inscr,
             "sorties" => $sorties,
             "utilisateur" => $utilisateur,
             "form" => $form->createView()
         ]);
     }
+
+
 }

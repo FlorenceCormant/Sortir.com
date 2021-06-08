@@ -251,5 +251,13 @@ class Sorties
         return $this;
     }
 
+    public function checkIfInscrit(Participants $p): bool
+    {
+        return $this->inscriptions->exists(function($key, $inscription) use($p)
+        {
+            return ($inscription->getUserinscription() == $p);
+        });
+    }
+
 
 }

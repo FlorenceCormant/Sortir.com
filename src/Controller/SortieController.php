@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Etats;
 use App\Entity\Participants;
 use App\Entity\Sorties;
+use App\Form\AnnulationFormType;
 use App\Form\SortieFormType;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortiesRepository;
@@ -140,8 +141,10 @@ class SortieController extends AbstractController
     public function annulerSortie($id, Request $request, EntityManagerInterface $entityManager, SortiesRepository $sortiesRepository): Response{
 
 
+
+
         $sortie = $sortiesRepository->find($id);
-        $form = $this->createForm(SortieFormType::class, $sortie);
+        $form = $this->createForm(AnnulationFormType::class, $sortie);
         $form->handleRequest($request);
 
         if($form->isSubmitted()){
@@ -155,16 +158,17 @@ class SortieController extends AbstractController
             $entityManager->persist($sortie);
             $entityManager->flush();
 
-            $this->addFlash('succes','Annonce modifié !!');
+            $this->addFlash('succes','Annonce annuler !!');
             return $this->redirectToRoute('accueil_home');
         }
 
 
 
         return $this->render('sortie/annulersortie.html.twig', [
-            'sortieForm' => $form->createView(),
-            'detailsortie' => $sortie
+            'annulForm' => $form->createView(),
+            'annulsortie' => $sortie
         ]);
+
 
     }
 

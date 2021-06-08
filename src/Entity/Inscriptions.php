@@ -34,6 +34,7 @@ class Inscriptions
 
 
 
+
     public function __construct()
     {
         $this->no_participant = new ArrayCollection();
@@ -71,6 +72,7 @@ class Inscriptions
         $this->userinscription = $userinscription;
         return $this;
     }
+
 
 
 }

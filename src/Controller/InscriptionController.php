@@ -13,6 +13,7 @@ use App\Repository\ParticipantRepository;
 use App\Repository\ParticipantsRepository;
 use App\Repository\SortiesRepository;
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Driver\AbstractDB2Driver;
 use Doctrine\ORM\EntityManagerInterface;
 use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,6 +33,7 @@ class InscriptionController extends AbstractController
 
         $user = $participantRepository->find($userid);
 
+
         $sortie = $sortiesRepository->find($id);
 
         $nbInscription = $sortie->getInscriptions();
@@ -42,7 +44,6 @@ class InscriptionController extends AbstractController
 
         if (count($nbInscription) < $nombreInscritionMax) {
             $inscription = new Inscriptions();
-
             $inscription->setUserinscription($user);
             $inscription->setDateInscription(new \DateTime());
             $inscription->setNoSortie($sortie);
@@ -79,6 +80,7 @@ class InscriptionController extends AbstractController
         $nombreInscritionMax = $sortie->getNbInscriptionsMax();
 
         if (count($nbInscription)-1 < $nombreInscritionMax && $numeroetat === 2){
+
             $sortie->setNoEtat($etat);
             $entityManager->persist($sortie);
         }

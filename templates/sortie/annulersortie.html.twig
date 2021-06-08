@@ -4,14 +4,13 @@
 
     <h1>Annuler la sortie</h1>
 
-    <p>Nom de la sortie : {{ detailsortie.nom }}</p>
-    <p>Date et heure de la sortie : {{ detailsortie.dateDebut|date("Y-m-d") }}</p>
-    <p>Ville organisatrice : {{ detailsortie.noLieu.noVille.nom }}</p>
-    <p>Lieu : {{ detailsortie.noLieu.nom }} {{ detailsortie.noLieu.rue }} {{ detailsortie.noLieu.noVille.codePostal }} {{ detailsortie.noLieu.noVille.nom }}</p>
-    <textarea id="story" name="story"
-              rows="5" style="margin-left: 10px" cols="33"></textarea>
-    <button class="btn btn-outline-secondary">Enregistrer</button>
-    <button class="btn btn-outline-secondary">Annuler</button>
-    <div class="col"><button class="btn btn-outline-secondary"><a class="link_button" href="{{ path('annulersortie', {'id' : detailsortie.id}) }}">Annuler</a></button></div>
+    <p>Nom de la sortie : {{ annulsortie.nom}}</p>
+    <p>Date et heure de la sortie : {{ annulsortie.dateDebut|date("Y-m-d") }}</p>
+    <p>Ville organisatrice : {{ annulsortie.noLieu.noVille.nom }}</p>
+    <p>Lieu : {{ annulsortie.noLieu.nom }} {{ annulsortie.noLieu.rue }} {{ annulsortie.noLieu.noVille.codePostal }} {{ annulsortie.noLieu.noVille.nom }}</p>
+{{ form_start(annulForm) }}
+    {{ form_widget(annulForm) }}
+    <button name="valeurenregistrer" value="4" class="btn btn-outline-secondary">Annuler</button>
+    {{ form_end((annulForm)) }}
 {% endblock %}
 
