@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Inscriptions;
 use App\Entity\PropertySearch;
 use App\Entity\Sorties;
 use App\Entity\User;
@@ -54,6 +55,16 @@ class SortiesRepository extends ServiceEntityRepository
         if ($search->getPasse() == true) { //Requete pour retourner la liste des sorties qui ont déjà eu lieu
             $qb->andwhere('s.date_cloture < :date');
             $qb->setParameter('date', new \DateTime('now'));
+        }
+        if ($search->getInscrit() == true) {
+            $qb->leftJoin('s.inscriptions', 'inscriptions');
+            $qb->leftJoin('inscriptions.userinscription', 'userinscription');
+            $qb->andWhere('inscriptions.userinscription = :userId');
+            $qb->setParameter('userId', $user);
+        } else if ($search->getPasInscrit() == true) {
+            $qb->leftJoin('s.inscriptions', 'inscriptions');
+            $qb->leftJoin('inscriptions.userinscription', 'userinscription');
+            $qb->andWhere('inscriptions.userinscription is null');
         }
 
         $query = $qb->getQuery();

@@ -36,7 +36,7 @@ class AccueilController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $search = $form->getData();
             //Si tous les champs sont null, on retourne toutes les sorties
-            if ($search->getNom()==null && $search->getVille() == null && $search->getDate() == null && $search->getOrga() == null && $search->getPasse() == null) {
+            if ($search->getNom()==null && $search->getVille() == null && $search->getDate() == null && $search->getOrga() == null && $search->getPasse() == null && $search->getInscrit() == null && $search->getPasInscrit() == null) {
                 $sorties = $sortiesRepository->findAll();
             }else {
                 //Sinon on fait appelle à la méthode qui trie en fonction de ce qui est null et de ce qui ne l'est pas
