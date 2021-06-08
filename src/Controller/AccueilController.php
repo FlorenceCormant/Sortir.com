@@ -32,14 +32,14 @@ class AccueilController extends AbstractController
         $sorties = $sortiesRepository->findAll(); //On recupere toute les sorties
         if ($form->isSubmitted() && $form->isValid()) {
             $search = $form->getData();
-
+            //Si tous les champs sont null, on retourne toutes les sorties
             if ($search->getNom()==null && $search->getVille() == null && $search->getDate() == null && $search->getOrga() == null && $search->getPasse() == null) {
                 $sorties = $sortiesRepository->findAll();
             }else {
-                $sorties = $sortiesRepository->global($search,$utilisateur);
+                //Sinon on fait appelle à la méthode qui trie en fonction de ce qui est null et de ce qui ne l'est pas
+                $sorties = $sortiesRepository->total($search,$utilisateur);
             }
         }
-
 
         return $this->render('accueil/home.html.twig', [
             "sorties" => $sorties,

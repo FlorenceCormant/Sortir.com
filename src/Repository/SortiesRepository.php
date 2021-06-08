@@ -9,6 +9,7 @@ use App\Form\PropertySearchType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -24,90 +25,38 @@ class SortiesRepository extends ServiceEntityRepository
         parent::__construct($registry, Sorties::class);
     }
 
-    // /**
-    //  * @return Sorties[] Returns an array of Sorties objects
-    //  */
 
-    public function motCle(PropertySearch $search) //Methode pour la recherche par nom de sortie
+    public function total(PropertySearch $search, $user)
     {
-//On compare ce qui est recupere dans le formulaire à ce qui est present dans la colonne nom des sorties
-        $qb = $this->createQueryBuilder('u')
-            ->Where('u.nom LIKE :word')
-            ->setParameter('word', '%' . $search->getNom() . '%')
-            ->getQuery()
-            ->getResult();
-        return $qb;
-    }
-
-    //Methode pour rechercher par ville, en utilisant l'ID de la ville
-    public function ville(PropertySearch $search)
-    {
-        $qb = $this->createQueryBuilder('s')
-            ->leftJoin('s.no_lieu', 'noLieu')
-            ->leftJoin('noLieu.no_ville', 'ville')
-            ->Where('noLieu.no_ville = :ville')
-            ->setParameter('ville', $search->getVille()->getId())
-            ->getQuery()
-            ->getResult();
-
-        return $qb;
-    }
-
-    public function date(PropertySearch $search)
-    {
-        $qb = $this->createQueryBuilder('s')
-            ->where("DATE(s.date_debut) = DATE(:date)")
-            ->setParameter('date', $search->getDate())
-            ->getQuery()
-            ->getResult();
-        return $qb;
-
-    }
-
-    public function orga($user)
-    {
-        $qb = $this->createQueryBuilder('s')
-            ->where('s.organisateur = :orga')
-            ->setParameter('orga', $user)
-            ->getQuery()
-            ->getResult();
-        return $qb;
-    }
-
-    public function passe()
-    {
-        $qb = $this->createQueryBuilder('s')
-            ->where('s.date_cloture < :date')
-            ->setParameter('date', new \DateTime('now') )
-            ->getQuery()
-            ->getResult();
-
-        return $qb;
-    }
-
-//Methode pour requeter les 2 requetes precedente en meme temps et donc recupere les sorties ou le lieu et le nom correspondent à la sortie
-    public function global(PropertySearch $search, $user)
-    {
-        if ($search->getNom() !== null) {
-            $requete = $this->motCle($search);
-            return $requete;
+        $qb = $this->createQueryBuilder('s');
+        if ($search->getNom()) { //Requete pour une recherche par mot clé
+            $qb->Where('s.nom LIKE :word');
+            $qb->setParameter('word', '%' . $search->getNom() . '%');
         }
-        if ($search->getVille() !== null) {
-            $requete = $this->ville($search);
-            return $requete;
+
+        if ($search->getVille()) {//Requete pour une recherche en fonction de la ville de la sortie
+            $qb->leftJoin('s.no_lieu', 'noLieu');
+            $qb->leftJoin('noLieu.no_ville', 'ville');
+            $qb->andWhere('noLieu.no_ville = :ville');
+            $qb->setParameter('ville', $search->getVille()->getId());
         }
-        if ($search->getDate() !== null) {
-            $requete = $this->date($search);
-            return $requete;
+        if ($search->getDate()) { //Requete pour rechercher une sortie en fonction de la date
+            $qb->andWhere("DATE(s.date_debut) = DATE(:date)");
+            $qb->setParameter('date', $search->getDate());
         }
-        if ($search->getOrga() !== null) {
-            $requete = $this->orga($user);
-            return $requete;
+        if ($search->getOrga() == true) { //Requete pour retourner la liste des sorties où l'utilisateur connecté est l'organisateur
+            $qb->andwhere('s.organisateur = :orga');
+            $qb->setParameter('orga', $user);
         }
-        if ($search->getPasse() !== null) {
-            $requete = $this->passe();
-            return $requete;
+        if ($search->getPasse() == true) { //Requete pour retourner la liste des sorties qui ont déjà eu lieu
+            $qb->andwhere('s.date_cloture < :date');
+            $qb->setParameter('date', new \DateTime('now'));
         }
-        return '';
+
+        $query = $qb->getQuery();
+        $result = $query->getResult();
+        return $result;
+
+
     }
 }
