@@ -1,84 +1,95 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="date_jour">
-        Date du jour : {{ "now"|date('d/m/Y') }}
-        {% if utilisateur != null %}
-            Participant : {{ utilisateur.username }}
-        {% endif %}
+<div class="date_jour">
+    Date du jour : {{ "now"|date('d/m/Y') }}
+    {% if utilisateur != null %}
+        Participant : {{ utilisateur.username }}
+    {% endif %}
+</div>
+
+<div>
+    <div class="form-group formulaire">
+        {{ form_start(form) }}
+        <label for="ville">Ville : {{ form_widget(form.ville) }}</label>
+        <label for="nom">Le nom de la sortie contient : {{ form_widget(form.nom) }}</label>
+        <button class="btn btn-primary">Rechercher</button>
+        {{ form_end(form) }}
     </div>
+    <button class="btn btn-primary reset" onclick="reset()">Reset</button>
 
-    <div>
-        <div class="form-group formulaire">
-            {{ form_start(form) }}
-            <label for="ville">Ville : {{ form_widget(form.ville) }}</label>
-            <label for="nom">Le nom de la sortie contient : {{ form_widget(form.nom) }}</label>
-            <button class="btn btn-primary">Rechercher</button>
-            {{ form_end(form) }}
-        </div>
-        <button class="btn btn-primary reset" onclick="reset()">Reset</button>
-
-        <div class="table_complete">
-            <table class="table table-hover table-stripped table_sortie ">
-                <thead>
-                <tr>
-                    <th scope="col">Nom de la sortie</th>
-                    <th scope="col">Date de la sortie</th>
-                    <th scope="col">Clôture</th>
-                    <th scope="col">Inscrit/place</th>
-                    <th scope="col">Etat</th>
-                    <th scope="col">Inscrit</th>
-                    <th scope="col">Organisateur</th>
-                    <th scope="col">Actions</th>
-                </tr>
-                </thead>
-                {% for sortie in sorties %}
-                    {# Affiche seulement les sorties qui datent de moins de 1 mois #}
-                    {% if date(sortie.dateDebut) > date("-1 months") %}
-                        <tbody>
-                        <tr>
-                            <th scope="row">{{ sortie.nom }}</th>
-                            <td>{{ sortie.dateDebut|date('d/m/Y') }}</td>
-                            <td>{{ sortie.dateCloture|date('d/m/Y') }}</td>
-                            <td> {{ sortie.inscriptions.count }} / {{ sortie.nbInscriptionsMax }}</td>
-                            <td>{{ sortie.noEtat.libelle }}</td>
-                            <td>{{ sortie.noLieu.noVille.nom }}</td>
-                            <td>
-                                <a href="{{ path('detailparticipant', {'id' : sortie.id}) }}">{{ sortie.organisateur.pseudo }}</a>
-                            </td>
-                            <td><a href="{{ path('detailsortie', {'id' : sortie.id}) }}">Afficher</a>
-
-
-                                {# Permet la modification et l'annulation seulement si les user id et egale au user de l'utilisateur et seulement si la sortie est en cours ou en creation #}
-                                {% if sortie.noEtat.id != 3 and sortie.noEtat.id != 2 and sortie.noEtat.id != 5 %}
-                                {% if utilisateur != null %}
-                                {% if sortie.organisateur.id == app.user.id %}
-                                <a href="{{ path('modificationsortie', {'id' : sortie.id}) }}">Modification</a>
-                                <a href="{{ path('annulersortie', {'id' : sortie.id}) }}">Annuler</a></td>
+    <div class="table_complete">
+        <table class="table table-hover table-stripped table_sortie ">
+            <thead>
+            <tr>
+                <th scope="col">Nom de la sortie</th>
+                <th scope="col">Date de la sortie</th>
+                <th scope="col">Clôture</th>
+                <th scope="col">Inscrit/place</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Inscrit</th>
+                <th scope="col">Organisateur</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            {% for sortie in sorties %}
+                {# Affiche seulement les sorties qui datent de moins de 1 mois #}
+                {% if date(sortie.dateDebut) > date("-1 months") %}
+                    <tbody>
+                    <tr>
+                        <th scope="row">{{ sortie.nom }}</th>
+                        <td>{{ sortie.dateDebut|date('d/m/Y') }}</td>
+                        <td>{{ sortie.dateCloture|date('d/m/Y') }}</td>
+                        <td> {{ sortie.inscriptions.count }} / {{ sortie.nbInscriptionsMax }}</td>
+                        <td>{{ sortie.noEtat.libelle }}</td>
+                        {% if utilisateur != null %}
+                            {%  if not sortie.checkIfInscrit(app.user) %}
+                                <td></td>
+                            {% else %}
+                                <td>X</td>
                             {% endif %}
-                            {% endif %}
-                            {% endif %}
+                        {% elseif utilisateur == null %}
+                            <td></td>
+                        {% endif %}
+                        <td>
+                            <a href="{{ path('detailparticipant', {'id' : sortie.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                        </td>
+                        <td><a href="{{ path('detailsortie', {'id' : sortie.id}) }}">Afficher</a>
 
-                            {# Permet de s'inscrire seulement si la sortie est est ouverte et si l'utilisateur n'est pas l'organisateur de la sortie #}
-                            {% if sortie.noEtat.id != 2 and sortie.noEtat.id != 3  and sortie.noEtat.id != 4 and sortie.noEtat.id != 5 %}
-                                {% if utilisateur != null %}
-                                    {% if sortie.organisateur.id != app.user.id %}
-                                        {% if date(sortie.dateCloture) > date() %}
-                                            {% if sortie.nbInscriptionsMax > sortie.inscriptions.count %}
-                                                {%  if not sortie.checkIfInscrit(app.user) %}
-                                                <a class="link_button" href="{{ path('inscription', {'id' : sortie.id }) }}">S'inscrire</a>
-                                                {% else %}
-                                                    <a class="link_button" href="{{ path('deleteinscription', {'id' : sortie.id }) }}">Se desister</a>
-                                                {% endif %}
 
-                                                {% endif %}
+                            {# Permet la modification et l'annulation seulement si les user id et egale au user de l'utilisateur et seulement si la sortie est en cours ou en creation #}
+                            {% if sortie.noEtat.id != 3 and sortie.noEtat.id != 2 and sortie.noEtat.id != 5 %}
+                            {% if utilisateur != null %}
+                            {% if sortie.organisateur.id == app.user.id %}
+                            <a href="{{ path('modificationsortie', {'id' : sortie.id}) }}">Modification</a>
+                            <a href="{{ path('annulersortie', {'id' : sortie.id}) }}">Annuler</a></td>
+                        {% endif %}
+                        {% endif %}
+                        {% endif %}
+
+                        {# Permet de s'inscrire seulement si la sortie est est ouverte et si l'utilisateur n'est pas l'organisateur de la sortie #}
+                        {% if sortie.noEtat.id != 2 and sortie.noEtat.id != 3  and sortie.noEtat.id != 4 and sortie.noEtat.id != 5 %}
+                            {% if utilisateur != null %}
+                                {% if sortie.organisateur.id != app.user.id %}
+                                    {% if date(sortie.dateCloture) > date() %}
+                                        {% if sortie.nbInscriptionsMax > sortie.inscriptions.count %}
+                                            {% if not sortie.checkIfInscrit(app.user) %}
+                                                <a class="link_button"
+                                                   href="{{ path('inscription', {'id' : sortie.id }) }}">S'inscrire</a>
+                                            {% else %}
+                                                <a class="link_button"
+                                                   href="{{ path('deleteinscription', {'id' : sortie.id }) }}">Se
+                                                    desister</a>
+                                            {% endif %}
+
                                         {% endif %}
                                     {% endif %}
                                 {% endif %}
                             {% endif %}
+                        {% endif %}
 
-                </tr>
-                </tbody>
+                    </tr>
+                    </tbody>
                 {% endif %}
             {% endfor %}
         </table>
@@ -86,12 +97,11 @@
     </div>
 
 
+    {% endblock %}
 
-{% endblock %}
+    {% block title %}
 
-{% block title %}
-
-{% endblock %}
+    {% endblock %}
 
 
 

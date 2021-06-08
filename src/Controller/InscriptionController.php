@@ -2,20 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Etats;
 use App\Entity\Inscriptions;
-use App\Entity\Participants;
-use App\Entity\Sorties;
-use App\Form\InscriptionFormType;
 use App\Repository\EtatsRepository;
 use App\Repository\InscriptionsRepository;
-use App\Repository\ParticipantRepository;
 use App\Repository\ParticipantsRepository;
 use App\Repository\SortiesRepository;
 use App\Repository\UserRepository;
-use Doctrine\DBAL\Driver\AbstractDB2Driver;
 use Doctrine\ORM\EntityManagerInterface;
-use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

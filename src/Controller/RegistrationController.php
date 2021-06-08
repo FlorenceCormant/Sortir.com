@@ -60,7 +60,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $registrationForm->createView(),
-            'user'=>$user
+            'user' => $user
         ]);
     }
 
@@ -77,7 +77,7 @@ class RegistrationController extends AbstractController
             throw $this->createNotFoundException('Utilisateur inconnu');
         }
         return $this->render('user/profil.html.twig', [
-            'user'=> $user
+            'user' => $user
         ]);
     }
 
@@ -86,19 +86,19 @@ class RegistrationController extends AbstractController
      */
 
     public function editProfil($id,
-                                UserRepository $userRepository,
-                                Request $request,
-                                EntityManagerInterface $entityManager):Response
+                               UserRepository $userRepository,
+                               Request $request,
+                               EntityManagerInterface $entityManager): Response
     {
-        $user=$userRepository->find($id);
+        $user = $userRepository->find($id);
         if (!$user) {
             throw $this->createNotFoundException('Utilisateur inconnu');
         }
 
-        $profilForm=$this->createForm(RegistrationFormType::class,$user);
+        $profilForm = $this->createForm(RegistrationFormType::class, $user);
         $profilForm->handleRequest($request);
 
-        if ($profilForm->isSubmitted() && $profilForm->isValid()){
+        if ($profilForm->isSubmitted() && $profilForm->isValid()) {
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -110,10 +110,6 @@ class RegistrationController extends AbstractController
             "profilForm" => $profilForm->createView()
         ]);
     }
-
-
-
-
 
 
 }

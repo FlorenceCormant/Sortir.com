@@ -7,7 +7,7 @@ use App\Entity\Participants;
 use App\Entity\Sorties;
 use App\Form\AnnulationFormType;
 use App\Form\SortieFormType;
-use App\Repository\ParticipantRepository;
+use App\Repository\ParticipantsRepository;
 use App\Repository\SortiesRepository;
 use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\ORM\EntityManagerInterface;
