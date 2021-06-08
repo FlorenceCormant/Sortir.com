@@ -22,6 +22,10 @@
 
         <a href="{{ path('accueil_home') }}"><button type="button">Retour</button></a>
 
+        {% if app.user != null %}
+            <a class="link_button" href="{{ path('profil_edit', {'id' : app.user.id}) }}">Modifier le profil</a>
+        {% endif %}
+
     </div>
 
 

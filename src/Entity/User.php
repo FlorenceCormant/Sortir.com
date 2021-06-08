@@ -20,9 +20,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @UniqueEntity(fields={"pseudo"}, message="There is already an account with this pseudo")
  */
 
-// @InheritanceType("SINGLE_TABLE")
-// @DiscriminatorColumn(name="TYPE_ENTITE")
-// @DiscriminatorMap({"user" = "User", "participants" = "Participants"})
 
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {

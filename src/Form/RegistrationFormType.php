@@ -27,6 +27,11 @@ class RegistrationFormType extends AbstractType
             ->add("nom")
             ->add("telephone")
             ->add("email")
+            ->add('villes', EntityType::class, [
+                'label' =>'Ville de rattachement',
+                'class' => Villes::class,
+                'choice_label' => 'nom',
+            ])
             ->add('plainPassword', RepeatedType::class, [
                 'label' => 'Mot de Passe',
                 'type'=> PasswordType::class,
@@ -50,11 +55,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-           ->add('villes', EntityType::class, [
-                'label' =>'Ville de rattachement',
-                'class' => Villes::class,
-                'choice_label' => 'nom',
-            ])
+
             /*  ->add('agreeTerms', CheckboxType::class, [
                   'mapped' => false,
                   'constraints' => [

@@ -72,13 +72,42 @@ class RegistrationController extends AbstractController
     {
 
         $user = $userRepository->find($id);
-        dump($id);
 
         if (!$user) {
             throw $this->createNotFoundException('Utilisateur inconnu');
         }
         return $this->render('user/profil.html.twig', [
             'user'=> $user
+        ]);
+    }
+
+    /**
+     * @Route ("/user/edit/{id}", name="profil_edit")
+     */
+
+    public function editProfil($id,
+                                UserRepository $userRepository,
+                                Request $request,
+                                EntityManagerInterface $entityManager):Response
+    {
+        $user=$userRepository->find($id);
+        if (!$user) {
+            throw $this->createNotFoundException('Utilisateur inconnu');
+        }
+
+        $profilForm=$this->createForm(RegistrationFormType::class,$user);
+        $profilForm->handleRequest($request);
+
+        if ($profilForm->isSubmitted() && $profilForm->isValid()){
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Profil modifié');
+            return $this->redirectToRoute('user_profil', ['id' => $user->getId()]);
+        }
+        return $this->render('user/editProfil.html.twig', [
+            "user" => $user,
+            "profilForm" => $profilForm->createView()
         ]);
     }
 
