@@ -9,6 +9,10 @@
 
     <h1>{{ user.pseudo }}</h1>
 
+    <div class="user_photo">
+        <img src="{{ asset('img/photos/' ~ user.photo ) }}" alt="{{ user.pseudo }}">
+    </div>
+
     <div>
         <div>Prénom : {{ user.prenom | capitalize }} </div>
 

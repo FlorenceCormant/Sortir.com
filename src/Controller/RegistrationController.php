@@ -6,16 +6,20 @@ use App\Entity\Participants;
 use App\Entity\User;
 use App\Form\ProfilFormType;
 use App\Form\RegistrationFormType;
+use App\ManageEntity\UpdateEntity;
 use App\Repository\UserRepository;
 use App\Security\AppAuthenticator;
+use App\Upload\UserImage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -88,7 +92,10 @@ class RegistrationController extends AbstractController
     public function editProfil($id,
                                UserRepository $userRepository,
                                Request $request,
-                               EntityManagerInterface $entityManager): Response
+                               EntityManagerInterface $entityManager,
+                               SluggerInterface $slugger,
+                               UpdateEntity $updateEntity,
+                               UserImage $userImage): Response
     {
         $user = $userRepository->find($id);
         if (!$user) {
@@ -99,17 +106,42 @@ class RegistrationController extends AbstractController
         $profilForm->handleRequest($request);
 
         if ($profilForm->isSubmitted() && $profilForm->isValid()) {
-            $entityManager->persist($user);
-            $entityManager->flush();
+            if ($profilForm->isSubmitted() && $profilForm->isValid()) {
+                $photoFile = $profilForm->get('photo')->getData();
 
-            $this->addFlash('success', 'Profil modifié');
-            return $this->redirectToRoute('user_profil', ['id' => $user->getId()]);
+                if ($photoFile) {
+                    $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    // this is needed to safely include the file name as part of the URL
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
+
+                    // Move the file to the directory where brochures are stored
+                    try {
+                        $photoFile->move(
+                            $this->getParameter('upload_photos_users_dir'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                        // ... handle exception if something happens during file upload
+                    }
+
+                    // updates the 'brochureFilename' property to store the PDF file name
+                    // instead of its contents
+                    $user->setPhoto($newFilename);
+                }
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Profil modifié');
+                return $this->redirectToRoute('user_profil', ['id' => $user->getId()]);
+            }
+            return $this->render('user/editProfil.html.twig', [
+                "user" => $user,
+                "profilForm" => $profilForm->createView()
+            ]);
         }
-        return $this->render('user/editProfil.html.twig', [
-            "user" => $user,
-            "profilForm" => $profilForm->createView()
-        ]);
+
+
     }
-
-
 }
