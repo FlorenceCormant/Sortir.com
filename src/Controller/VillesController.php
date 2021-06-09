@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class VillesController extends AbstractController
 {
     /**
-     * @Route("/villes/gerer", name="gerervilles")
+     * @Route("/admin/villes/gerer", name="gerervilles")
      */
 
 
@@ -48,7 +48,7 @@ class VillesController extends AbstractController
     }
 
     /**
-     * @Route("/villes/supprimer/{id}", name="supprimervilles")
+     * @Route("/admin/villes/supprimer/{id}", name="supprimervilles")
      */
 
     public function supprimerVilles($id, EntityManagerInterface $entityManager){
@@ -63,7 +63,7 @@ class VillesController extends AbstractController
     }
 
     /**
-     * @Route("/villes/modifier/{id}", name="modifiervilles")
+     * @Route("/admin/villes/modifier/{id}", name="modifiervilles")
      */
     public function modifierVille($id, VillesRepository $villesRepository, EntityManagerInterface $entityManager, Request $request){
 
