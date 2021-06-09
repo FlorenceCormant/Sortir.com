@@ -38,7 +38,7 @@ class RegistrationFormType extends AbstractType
                 'first_options'=>['label'=>'Mot de passe'],
                 'second_options'=>['label'=>'Confirmation'],
                 'required'=>true,
-                'invalid_message'=>'Les mots de passe doivent être identiques.',
+                'invalid_message'=>'Les mots de passe doivent être identiques',
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,

@@ -6,10 +6,12 @@ use App\Entity\User;
 use App\Entity\Villes;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class ProfilFormType extends AbstractType
 {
@@ -26,13 +28,26 @@ class ProfilFormType extends AbstractType
                 'first_options'=>['label'=>'Mot de passe'],
                 'second_options'=>['label'=>'Confirmation'],
                 'required'=>true,
-                'invalid_message'=>'Les mots de passe doivent être identiques.'
+                'invalid_message'=>'Les mots de passe doivent être identiques'
             ])
             ->add('ville', EntityType::class, [
                 'label' =>'Ville de rattachement',
                 'class' => Villes::class,
                 'choice_label' => 'nom',
                 'disabled' => true,
+            ])
+            ->add('photo', FileType::class, [
+                'label' =>'Photo',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new Image(
+                        [
+                            'maxSize' => '7024k',
+                            'mimeTypesMessage' => "Format de l'image incorrecte !"
+                        ]
+                    )
+                ]
             ])
         ;
     }
