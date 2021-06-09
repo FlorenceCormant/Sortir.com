@@ -7,7 +7,7 @@
     <div class="container-fluid pt-3">
         <div class="row">
             <div class="col">
-                <h3>Créer une sortie</h3>
+                <h3 class="title">Créer une sortie</h3>
                 <hr>
             </div>
         </div>
@@ -44,14 +44,13 @@
                     {{ form_row(sortieForm.noLieu , {'attr':{'class':'form-control'}}) }}
                 </div>
                 <div class="form-group col text-center align-text-bottom">
-                    <a href="{{ path('createlieu') }}">Créer lieu</a>
+                    <a class="bn36 bn3637" href="{{ path('createlieu') }}">Créer lieu</a>
                 </div>
             </div>
             <div>
-
-                <button name="valeurenregistrer" value="4" class="btn btn-outline-secondary">Enregistrer</button>
-                <button name="valeurenregistrer" value="1" class="btn btn-outline-secondary">Publier la sortie</button>
-                <button class="btn btn-outline-secondary"><a href="{{ path('accueil_home') }}">Annuler</a></button>
+                <button name="valeurenregistrer" value="1" class="btn btn-primary">Publier la sortie</button>
+                <button name="valeurenregistrer" value="4" class="btn btn-secondary">Enregistrer</button>
+                <button class="btn btn-danger "><a class="annuler-link" href="{{ path('accueil_home') }}">Annuler</a></button>
 
             </div>
 

@@ -1,21 +1,27 @@
 <nav class="navbar navbar-expand-lg navigation_bar">
     <div class="container-fluid">
-        <a class="navbar-brand title_nav" href="{{ path('accueil_home') }}"><img src="{{ asset('img/Sortir.com.png') }}" alt="Logo Sortir.com" width="40%"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand title_nav" href="{{ path('accueil_home') }}"><img src="{{ asset('img/Sortir.com.png') }}"
+                                                                                 alt="Logo Sortir.com" width="40%"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse navigation_bar_item" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="{{ path('accueil_home') }}">Accueil</a>
+                <a class="nav-link" href="{# TODO #}">Villes</a>
                 <a class="nav-link" href="{{ path('gerervilles') }}">Villes</a>
                 <a class="nav-link" href="{# TODO #}">Sites</a>
                 {% if app.user != null %}
-                <a class="nav-link" href="{{ path('user_profil',{'id' : app.user.id}) }}">Mon profil</a>
+                    <a class="nav-link" href="{{ path('user_profil',{'id' : app.user.id}) }}">Mon profil</a>
+                    <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
                 {% endif %}
-                <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
-                <a class="nav-link" href="{{ path('app_register') }}">Créer un compte</a>
-                <a class="nav-link" href="{# TODO #}">Mon profil</a>
-                <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
+
+                {% if app.user == null %}
+                    <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
+                    <a class="nav-link" href="{{ path('app_register') }}">Créer un compte</a>
+                {% endif %}
+
 
             </div>
         </div>
@@ -23,4 +29,4 @@
 </nav>
 {# C'est la navBar de base,tout y est afficher pour le moment, il faudra donc mettre a jour en fonction de
 l'état de l'utilisateur, connecté ou non et administrateur ou non (Quelqu'un de non connecte verra Se connecter et creer un compte, mais pas
-se déconnecter, et seulement un administrateur pourra voir les liens de sites et villes) voir maquette  #}
+se déconnecter, et seulement un administrateur pourra voir les liens de sites et villes) voir maquette   #}

@@ -4,20 +4,22 @@
 {% block title %} {{ parent() }} | EditProfil {% endblock %}
 
 {% block body %}
-    <h2>Modification du Profil</h2>
-    <div class="password-div">
-        <a href="{{ path('change_Password') }}" class="btn btn-secondary" role="button">
-            Modifier mon mot de passe
-        </a>
-    </div>
+    <h2 class="title">Modification du Profil</h2>
+    <hr>
 
     <div>
         {{ form_start(profilForm) }}
         {{ form_widget(profilForm) }}
 
-        <button>Modifier</button>
+        <button class="btn btn-outline-danger">Modifier</button>
         {{ form_end(profilForm) }}
     </div>
+    <div class="password-div">
+        <a href="{{ path('change_Password') }}" class="btn btn-outline-dark" role="button">
+            Modifier mon mot de passe
+        </a>
+    </div>
+
 
 
 {% endblock %}
