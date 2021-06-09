@@ -16,6 +16,22 @@
     <p>Code postal : {{ detailsortie.noLieu.noVille.codePostal }}</p>
     <p>Lattitude : {{ detailsortie.noLieu.latitude }}</p>
     <p>Longitude : {{ detailsortie.noLieu.longitude }}</p>
+    {% if detailsortie.noEtat.id != 2 and detailsortie.noEtat.id != 3  and detailsortie.noEtat.id != 4 and detailsortie.noEtat.id != 5 %}
+        {% if utilisateur != null %}
+            {% if detailsortie.organisateur.id != app.user.id %}
+                {% if date(detailsortie.dateCloture) > date() %}
+                    {% if detailsortie.nbInscriptionsMax > detailsortie.inscriptions.count %}
+                        {% if not detailsortie.checkIfInscrit(app.user) %}
+                            <button class="btn btn-outline-secondary"><a  href="{{ path('inscription', {'id' : detailsortie.id }) }}">S'inscrire</a></button>
+                        {% else %}
+                            <button class="btn btn-outline-secondary"><a href="{{ path('deleteinscription', {'id' : detailsortie.id }) }}">Se desister</a></button>
+                        {% endif %}
+
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
 
     <h1>Liste des participants inscrits :</h1>
 
@@ -27,6 +43,7 @@
                 <th scope="col">Nom</th>
             </tr>
             </thead>
+
 
             {% for details in detail %}
             <tbody>

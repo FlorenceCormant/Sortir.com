@@ -79,13 +79,16 @@ class SortieController extends AbstractController
      */
     public function detailsortie($id, SortiesRepository $sortiesRepository, InscriptionsRepository $inscriptionsRepository){
 
+        $utilisateur = $this->getUser();
+
         $sortie = $sortiesRepository->find($id);
 
         $inscription = $inscriptionsRepository->recupererParticipant($id);
 
         return $this->render('sortie/affichersortie.html.twig',[
            'detailsortie' => $sortie,
-            'detail' => $inscription
+            'detail' => $inscription,
+            'utilisateur' =>$utilisateur,
             ]);
 
     }
