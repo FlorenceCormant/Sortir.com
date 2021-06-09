@@ -106,7 +106,6 @@ class RegistrationController extends AbstractController
         $profilForm->handleRequest($request);
 
         if ($profilForm->isSubmitted() && $profilForm->isValid()) {
-            if ($profilForm->isSubmitted() && $profilForm->isValid()) {
                 $photoFile = $profilForm->get('photo')->getData();
 
                 if ($photoFile) {
@@ -142,6 +141,4 @@ class RegistrationController extends AbstractController
             ]);
         }
 
-
-    }
 }
