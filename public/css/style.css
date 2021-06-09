@@ -140,3 +140,18 @@ body {
     height: 150px;
     width: 150px;
 }
+
+.sortie{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.detail_profil div {
+    margin-bottom:5%;
+}
+
+.nom_participant_sortie{
+    width: 500px;
+}
