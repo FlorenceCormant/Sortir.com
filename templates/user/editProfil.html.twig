@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% form_theme profilForm 'bootstrap_4_layout.html.twig' %}
+
 
 {% block title %} {{ parent() }} | EditProfil {% endblock %}
 
@@ -10,7 +10,6 @@
     <div>
         {{ form_start(profilForm) }}
         {{ form_widget(profilForm) }}
-
         <button class="btn btn-outline-danger">Modifier</button>
         {{ form_end(profilForm) }}
     </div>
