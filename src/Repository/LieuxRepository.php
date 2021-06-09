@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Lieux;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\DocBlock\Tags\Author;
 
 /**
  * @method Lieux|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +20,13 @@ class LieuxRepository extends ServiceEntityRepository
         parent::__construct($registry, Lieux::class);
     }
 
-    // /**
-    //  * @return Lieux[] Returns an array of Lieux objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
+    public function chercherlieuparville($villeid){
+        $queryBuilder = $this->createQueryBuilder('s')
+            ->where('s.no_ville =?1')
+            ->setParameter(1,$villeid)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+            return $queryBuilder;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Lieux
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

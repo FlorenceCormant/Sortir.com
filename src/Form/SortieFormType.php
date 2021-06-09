@@ -33,12 +33,8 @@ class SortieFormType extends AbstractType
                 'html5' => true,
                 'widget' => 'single_text'
             ])
-            ->add('nb_inscriptions_max', NumberType::class,[
-                'label' => 'Nombres de places :'
-            ])
-            ->add('duree', NumberType::class,[
-                'label' => 'Durée :'
-            ])
+            ->add('nb_inscriptions_max')
+            ->add('duree')
             ->add('description_infos', TextareaType::class,[
                 'label' => 'Description et infos :'
             ])

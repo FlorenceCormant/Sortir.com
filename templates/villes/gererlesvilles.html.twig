@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}{{ parent() }} | Gérer les villes{% endblock %}
+
+{% block body %}
+    <h1>Gérer les villes</h1>
+
+    <div class="table_complete">
+        <table class="table table-hover table-stripped table_sortie ">
+            <thead>
+            <tr>
+                <th scope="col">Ville</th>
+                <th scope="col">Code Postal</th>
+                <th></th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+
+            {% for ville in villes %}
+                <tbody>
+                <tr>
+                    <td scope="row">{{ ville.nom}}</td>
+                    <td>{{ ville.codePostal }}</td>
+                    <td><a href="{{ path('modifiervilles', {'id' : ville.id}) }}">Modifier</a></td>
+                    <td><a href="{{ path('supprimervilles', {'id' : ville.id} ) }}">Supprimer</a></td>
+                    <td><a href="{{ path('ajouterunlieu', {'id' : ville.id} ) }}">Gérer Lieu</a></td>
+                </tr>
+                </tbody>
+            {% endfor %}
+
+            <tbody>
+            {{ form_start(villesForm) }}
+            <tr>
+                <td>{{ form_row(villesForm.nom, {'attr':{'class':'form-control'}}) }}</td>
+                <td>{{ form_row(villesForm.code_Postal, {'attr':{'class':'form-control'}}) }}</td>
+                <td><button class="btn btn-outline-secondary" >Ajouter</button></td>
+            </tr>
+            {{ form_end(villesForm) }}
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+
+{% endblock %}
