@@ -9,10 +9,17 @@
 
     <h2 class="title_profil">Profil de : {{ user.pseudo }}</h2>
     <hr>
-
+{% if user.photo == null %}
     <div class="user_photo">
-        <img src="{{ asset('img/photos/' ~ user.photo ) }}" alt="{{ user.pseudo }}">
+        <img src="{{ asset('img/randomavatar.png' ) }}" alt="{{ user.pseudo }}">
     </div>
+    {% endif %}
+    {% if user.photo != null %}
+        <div class="user_photo">
+            <img src="{{ asset('img/photos/' ~ user.photo ) }}" alt="{{ user.pseudo }}">
+        </div>
+    {%  endif %}
+
 
     <div>
 
