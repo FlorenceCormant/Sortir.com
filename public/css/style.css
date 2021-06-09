@@ -155,3 +155,8 @@ body {
 .nom_participant_sortie{
     width: 500px;
 }
+
+.new_password{
+    width: 50%;
+    margin: auto;
+}
