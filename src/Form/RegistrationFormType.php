@@ -9,8 +9,10 @@ use App\Entity\Villes;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -25,15 +27,14 @@ class RegistrationFormType extends AbstractType
             ->add('pseudo')
             ->add("prenom")
             ->add("nom")
-            ->add("telephone")
+            ->add("telephone",NumberType::class,[
+            ])
             ->add("email")
             ->add('villes', EntityType::class, [
-                'label' =>'Ville de rattachement',
                 'class' => Villes::class,
                 'choice_label' => 'nom',
             ])
             ->add('plainPassword', RepeatedType::class, [
-                'label' => 'Mot de Passe',
                 'type'=> PasswordType::class,
                 'first_options'=>['label'=>'Mot de passe'],
                 'second_options'=>['label'=>'Confirmation'],
@@ -56,14 +57,6 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
 
-            /*  ->add('agreeTerms', CheckboxType::class, [
-                  'mapped' => false,
-                  'constraints' => [
-                      new IsTrue([
-                          'message' => 'You should agree to our terms.',
-                      ]),
-                  ],
-              ])*/
         ;
     }
 

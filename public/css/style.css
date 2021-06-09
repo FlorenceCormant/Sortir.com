@@ -1,13 +1,15 @@
-body{
+
+body {
     width: 100%;
     overflow-x: hidden;
+    background-color: #f8fafc !important;
 }
 
-.navigation_bar{ /*Gestion de la couleur de la navbar*/
+.navigation_bar { /*Gestion de la couleur de la navbar*/
     background-color: #284243;
 }
 
-.navigation_bar_item{ /*Sous menu de la barre de navigation*/
+.navigation_bar_item { /*Sous menu de la barre de navigation*/
     justify-content: flex-end;
 }
 
@@ -16,26 +18,119 @@ body{
     font-size: 1.2em;
 }
 
-.navigation_bar_item a:hover{ /*Couleur des liens en passant dessus*/
+.navigation_bar_item a:hover { /*Couleur des liens en passant dessus*/
     color: #5eb5e0;
 }
 
-.date_jour{
+.date_jour {
     text-align: end;
 }
 
-.table_sortie{
-    overflow-y: scroll;
+.table_sortie {
+    overflow-y: auto;
     display: block;
     max-height: 500px;
     text-align: center;
+    scrollbar-3dlight-color: red;
 }
 
-.table_complete{
+.table_sortie::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+.table_sortie::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+.table_sortie::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #555;
+}
+
+.table_complete {
     width: fit-content;
     margin: auto;
 }
 
-.formulaire{
+.formulaire {
     text-align: center;
+    display: none;
+}
+
+.checkbox_form {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.button_test{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button_form_close{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.entete{
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar{
+    padding: 0 !important;
+}
+
+.null_sortie{
+    text-align: center;
+}
+
+.annuler-link{
+    color: white;
+}
+
+.form_register form{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+}
+
+.button_account{
+    display: flex;
+    justify-content: space-around;
+}
+
+.form_login{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+}
+
+.detail_profil{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.detail_profil div{
+    margin-bottom: 1.5%;
+}
+
+.title_profil{
+    text-align: center;
+
 }

@@ -2,16 +2,11 @@
 
 namespace App\Repository;
 
-use App\Entity\Inscriptions;
 use App\Entity\PropertySearch;
 use App\Entity\Sorties;
-use App\Entity\User;
-use App\Form\PropertySearchType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
-use phpDocumentor\Reflection\DocBlock\Tags\Return_;
-use Symfony\Component\Security\Core\User\UserInterface;
+
 
 /**
  * @method Sorties|null find($id, $lockMode = null, $lockVersion = null)
@@ -26,9 +21,6 @@ class SortiesRepository extends ServiceEntityRepository
         parent::__construct($registry, Sorties::class);
     }
 
-    // /**
-    //  * @return Sorties[] Returns an array of Sorties objects
-    //  */
 
     public function total(PropertySearch $search, $user)
     {

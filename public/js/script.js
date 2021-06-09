@@ -9,5 +9,18 @@ document.getElementById('inscrit').checked = false;
 document.getElementById('pasInscrit').checked = false;
 }
 
+$(document).ready(function () {
+    $(".button_show").click(function () {
+        $(".formulaire").fadeIn();
+        $('.button_show').hide();
+    });
+    $(".button_close").click(function () {
+        $(".formulaire").fadeOut();
+        $('.button_show').show();
+
+    });
+})
+
+
 
 
