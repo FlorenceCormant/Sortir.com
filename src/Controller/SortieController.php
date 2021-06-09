@@ -7,8 +7,10 @@ use App\Entity\Participants;
 use App\Entity\Sorties;
 use App\Form\AnnulationFormType;
 use App\Form\SortieFormType;
+use App\Repository\InscriptionsRepository;
 use App\Repository\ParticipantsRepository;
 use App\Repository\SortiesRepository;
+use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\This;
@@ -75,12 +77,15 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/detail/{id}", name="detailsortie")
      */
-    public function detailsortie($id, SortiesRepository $sortiesRepository){
+    public function detailsortie($id, SortiesRepository $sortiesRepository, InscriptionsRepository $inscriptionsRepository){
 
         $sortie = $sortiesRepository->find($id);
 
+        $inscription = $inscriptionsRepository->recupererParticipant($id);
+
         return $this->render('sortie/affichersortie.html.twig',[
-           'detailsortie' => $sortie
+           'detailsortie' => $sortie,
+            'detail' => $inscription
             ]);
 
     }
@@ -182,6 +187,21 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/afficherparticipant.html.twig',[
             'detailparticipant' => $sortie
+        ]);
+
+    }
+
+    /**
+     * @Route("/sortie/detailutilisateur/{id}", name="detailutilisateur")
+     */
+    public function detailutilisateur($id, SortiesRepository $sortiesRepository, UserRepository  $userRepository){
+
+        $sortie = $sortiesRepository->find($id);
+        $user = $userRepository->find($id);
+
+        return $this->render('user/detailuser.html.twig',[
+            'detailparticipant' => $sortie,
+            'user' => $user,
         ]);
 
     }

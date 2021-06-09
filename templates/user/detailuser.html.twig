@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Détail</h1>
+
+    <p>Prénom : {{ user.prenom}}</p>
+    <p>Nom : {{ user.nom }}</p>
+    <p>Téléphone : {{ user.telephone }}</p>
+    <p>Email : {{ user.email }}</p>
+    <button class="btn btn-outline-secondary"> <a href="{{ path('accueil_home')}}">Retour</a></button>
+
+
+
+
+
+{% endblock %}
+

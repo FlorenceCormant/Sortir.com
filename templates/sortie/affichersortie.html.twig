@@ -17,6 +17,30 @@
     <p>Lattitude : {{ detailsortie.noLieu.latitude }}</p>
     <p>Longitude : {{ detailsortie.noLieu.longitude }}</p>
 
+    <h1>Liste des participants inscrits :</h1>
+
+    <div class="table_complete">
+        <table class="table table-hover table-stripped table_sortie ">
+            <thead>
+            <tr>
+                <th scope="col">Pseudo</th>
+                <th scope="col">Nom</th>
+            </tr>
+            </thead>
+
+            {% for details in detail %}
+            <tbody>
+                    <tr>
+                        <td><a href="{{ path('detailutilisateur', {'id' : details.userinscription.id}) }}">{{ details.userinscription.pseudo }}</a></td>
+                        <td>{{ details.userinscription.nom }}</td>
+                        <th></th>
+                       {# <td><a href="{{ path('detailsortie', {'id' : sortie.id}) }}">Afficher</a>#}
+                    </tr>
+                    </tbody>
+            {% endfor %}
+        </table>
+
+    </div>
 
 
 

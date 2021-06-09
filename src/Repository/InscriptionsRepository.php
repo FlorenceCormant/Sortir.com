@@ -33,5 +33,15 @@ class InscriptionsRepository extends ServiceEntityRepository
 
             return $queryBuilder;
     }
+
+    public function recupererParticipant($nosortie){
+        $queryBuilder = $this->createQueryBuilder('s')
+            ->where('s.no_sortie =?1')
+            ->setParameter(1, $nosortie)
+            ->getQuery()
+            ->getResult();
+
+        return $queryBuilder;
+    }
 }
 

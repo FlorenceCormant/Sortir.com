@@ -10,6 +10,12 @@
     <h2 class="title_profil">Profil de : {{ user.pseudo }}</h2>
     <hr>
 
+    <div class="user_photo">
+        <img src="{{ asset('img/photos/' ~ user.photo ) }}" alt="{{ user.pseudo }}">
+    </div>
+
+    <div>
+
     <div class="detail_profil">
         <div class="profil_firstName"><b>Prénom : </b>{{ user.prenom | capitalize }} </div>
 

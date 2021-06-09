@@ -29,7 +29,7 @@ class ChangePasswordType extends AbstractType
                 RepeatedType::class,
                 [
                     'type' => PasswordType::class,
-                    'invalid_message' => 'les deux mots de passe doivent être identiques.',
+                    'invalid_message' => 'les deux mots de passe doivent être identiques',
                     'options' => ['attr' => ['class' => 'password-field']],
                     'required' => true,
                     'first_options' => ['label' => 'Nouveau mot de passe :'],
