@@ -10,12 +10,14 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class SortieFormType extends AbstractType
 {
@@ -44,6 +46,19 @@ class SortieFormType extends AbstractType
                 'class' => Lieux::class,
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un lieu'])
+            ->add('photo', FileType::class, [
+                'label' =>'Photo',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new Image(
+                        [
+                            'maxSize' => '7024k',
+                            'mimeTypesMessage' => "Format de l'image incorrecte !"
+                        ]
+                    )
+                ]
+            ])
         ;
     }
 

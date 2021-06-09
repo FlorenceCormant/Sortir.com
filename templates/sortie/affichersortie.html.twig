@@ -4,6 +4,10 @@
 
     <h1>Afficher une sortie</h1>
 
+    <div class="sortie_photo">
+        <img src="{{ asset('img/photos/photoSortie/' ~ detailsortie.photo ) }}" alt="{{ detailsortie.nom }}">
+    </div>
+
     <p>Nom de la sortie : {{ detailsortie.nom }}</p>
     <p>Date et heure de la sortie : {{ detailsortie.dateDebut|date("Y-m-d") }}</p>
     <p>Date limite d'inscription : {{ detailsortie.dateCloture|date("Y-m-d") }}</p>

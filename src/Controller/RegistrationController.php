@@ -93,9 +93,8 @@ class RegistrationController extends AbstractController
                                UserRepository $userRepository,
                                Request $request,
                                EntityManagerInterface $entityManager,
-                               SluggerInterface $slugger,
-                               UpdateEntity $updateEntity,
-                               UserImage $userImage): Response
+                               SluggerInterface $slugger
+                               ): Response
     {
         $user = $userRepository->find($id);
         if (!$user) {
@@ -105,9 +104,10 @@ class RegistrationController extends AbstractController
         $profilForm = $this->createForm(RegistrationFormType::class, $user);
         $profilForm->handleRequest($request);
 
-        if ($profilForm->isSubmitted() && $profilForm->isValid()) {
-                $photoFile = $profilForm->get('photo')->getData();
 
+        if ($profilForm->isSubmitted() && $profilForm->isValid()) {
+            //ajout photo
+                $photoFile = $profilForm->get('photo')->getData();
                 if ($photoFile) {
                     $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
                     // this is needed to safely include the file name as part of the URL
