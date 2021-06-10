@@ -10,13 +10,19 @@
     <h2 class="title_profil">Profil de : {{ user.pseudo }}</h2>
     <hr>
 
-    <div class="user_photo">
-        {% if app.user.photo==null %}
-        <img src="{{ asset('img/avatar.jpg') }}" alt="avatar">
-        {% else %}
-        <img src="{{ asset('img/photos/photoUser/' ~ user.photo ) }}" alt="{{ user.pseudo }}">
-        {% endif %}
-    </div>
+
+    <div class="detail_profil">
+    {% if user.photo == null %}
+        <div class="user_photo">
+            <img src="{{ asset('img/randomavatar.png' ) }}" alt="{{ user.pseudo }}">
+        </div>
+    {% endif %}
+    {% if user.photo != null %}
+        <div class="user_photo">
+            <img src="{{ asset('img/photos/' ~ user.photo ) }}" alt="{{ user.pseudo }}">
+        </div>
+    {% endif %}
+
 
     <div>
 

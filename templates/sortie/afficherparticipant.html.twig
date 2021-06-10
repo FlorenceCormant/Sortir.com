@@ -2,18 +2,27 @@
 
 {% block body %}
 
-    <h1>{{ detailparticipant.organisateur.pseudo }}</h1>
+<h2 class="title_profil">Profile de : {{ detailparticipant.organisateur.pseudo }}</h2>
+<br>
+<div class="detail_profil">
+    {% if detailparticipant.organisateur.photo != null %}
+    <div class="user_photo">
+        <img src="{{ asset('img/photos/' ~ detailparticipant.organisateur.photo ) }}" alt="{{ detailparticipant.organisateur.pseudo }}">
+    </div>
+    {% endif %}
+    {% if detailparticipant.organisateur.photo == null %}
+        <div class="user_photo">
+            <img src="{{ asset('img/randomavatar.png' ) }}" alt="{{ detailparticipant.organisateur.pseudo }}">
+        </div>
+    {% endif %}
+    <div class="detail_profil">
+        <div class="profil_firstName"><b>Prénom : </b>{{ detailparticipant.organisateur.prenom }}</div>
+        <div class="profil_name"><b>Nom :</b>{{ detailparticipant.organisateur.nom }}</div>
+        <div class="profil_phone"><b>Téléphone</b> : {{ detailparticipant.organisateur.telephone }}</div>
+        <div class="profil_email"><b>Email : </b>{{ detailparticipant.organisateur.email }}</div>
+        <div class="profil_city"><b>Ville de rattachement : </b>{{ detailparticipant.noLieu.noVille.nom }}</div>
+        <button class="btn btn-outline-secondary"><a href="{{ path('accueil_home') }}">Retour</a></button>
 
-    <p>Prénom : {{ detailparticipant.organisateur.prenom }}</p>
-    <p>Nom : {{ detailparticipant.organisateur.nom }}</p>
-    <p>Téléphone : {{ detailparticipant.organisateur.telephone }}</p>
-    <p>Email : {{ detailparticipant.organisateur.email }}</p>
-    <p>Ville de rattachement : {{ detailparticipant.noLieu.noVille.nom }}</p>
-    <button class="btn btn-outline-secondary"> <a href="{{ path('accueil_home')}}">Retour</a></button>
 
-
-
-
-
-{% endblock %}
+        {% endblock %}
 
