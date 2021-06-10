@@ -37,10 +37,13 @@
                 <button class="btn btn-outline-danger">Modifier</button>
                 {{ form_end(profilForm) }}
 
-
                 <a href="{{ path('change_Password') }}" class="btn btn-outline-dark" role="button">
                     Modifier mon mot de passe
                 </a>
+                <a class="btn btn-outline-danger" role="button" href="{{ path('accueil_home') }}">
+                    Annuler
+                </a>
+
             </div>
         </div>
     </div>
