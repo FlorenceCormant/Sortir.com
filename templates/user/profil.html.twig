@@ -38,8 +38,8 @@
         <div class="profil_city"><b>Ville de rattachement : </b>{{ user.villes.nom| capitalize }}</div>
         <div class="btn_profil">
             <a href="{{ path('accueil_home') }}">
-                <button class="btn btn-primary" type="button">Retour</button>
-            </a>
+                <button class="btn btn-primary"><a href="{{ path('accueil_home') }}">Retour</a></button>
+
 
             {% if app.user != null %}
                 <a class="btn btn-info " href="{{ path('profil_edit', {'id' : app.user.id}) }}">Modifier le profil</a>

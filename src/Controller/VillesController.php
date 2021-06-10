@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\PropertySearch;
 use App\Entity\Villes;
 use App\Form\VillesFormType;
+use App\Form\VillesSearchFormType;
 use App\Repository\VillesRepository;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,12 +30,12 @@ class VillesController extends AbstractController
         $form = $this->createForm(VillesFormType::class, $ville);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()){
+        if ($form->isSubmitted()) {
 
             $entityManager->persist($ville);
             $entityManager->flush();
 
-            $this->addFlash('succes','Villes créer !!');
+            $this->addFlash('succes', 'Villes créer !!');
             return $this->redirectToRoute('gerervilles');
         }
 
