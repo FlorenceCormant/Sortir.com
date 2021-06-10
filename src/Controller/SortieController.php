@@ -120,7 +120,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/modification/{id}", name="modificationsortie")
      */
-    public function modifiersortie($id, Request $request, EntityManagerInterface $entityManager, SortiesRepository $sortiesRepository){
+    public function modifiersortie($id, Request $request, EntityManagerInterface $entityManager, SortiesRepository $sortiesRepository,SluggerInterface $slugger){
         $maValeur = $request->request->get("valeurenregistrer");
 
 
@@ -128,12 +128,28 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieFormType::class, $sortie);
         $form->handleRequest($request);
 
-        if($form->isSubmitted()){
+        if($form->isSubmitted() && $form->isValid()){
             $etat = $this->getDoctrine()
                 ->getRepository(Etats::class)
                 ->find($maValeur);
 
             $sortie->setNoEtat($etat);
+
+       /*     //modification photo
+            $photoFile = $form->get('photo')->getData();
+            if ($photoFile) {
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
+                try {
+                    $photoFile->move(
+                        $this->getParameter('upload_photos_sorties_dir'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                }
+                $sortie->setPhoto($newFilename);
+            }*/
 
 
             $entityManager->persist($sortie);
