@@ -17,12 +17,12 @@
             </div>
         {% endif %}
         <div class="detail_profil">
-            <div class="profil_firstName"><b>Prénom : </b>{{ detailparticipant.organisateur.prenom }}</div>
-            <div class="profil_name"><b>Nom :</b>{{ detailparticipant.organisateur.nom }}</div>
-            <div class="profil_phone"><b>Téléphone</b> : {{ detailparticipant.organisateur.telephone }}</div>
-            <div class="profil_email"><b>Email : </b>{{ detailparticipant.organisateur.email }}</div>
-            <div class="profil_city"><b>Ville de rattachement : </b>{{ detailparticipant.noLieu.noVille.nom }}</div>
-            <button class="btn btn-outline-secondary"><a href="{{ path('accueil_home') }}">Retour</a></button>
+            <div class="profil"><b>Prénom : </b>{{ detailparticipant.organisateur.prenom }}</div>
+            <div class="profil"><b>Nom :</b>{{ detailparticipant.organisateur.nom }}</div>
+            <div class="profil"><b>Téléphone</b> : {{ detailparticipant.organisateur.telephone }}</div>
+            <div class="profil"><b>Email : </b>{{ detailparticipant.organisateur.email }}</div>
+            <div class="profil"><b>Ville de rattachement : </b>{{ detailparticipant.noLieu.noVille.nom }}</div>
+            <button class="btn btn-outline-info btn_back"><a href="{{ path('accueil_home') }}">Retour</a></button>
         </div>
     </div>
 

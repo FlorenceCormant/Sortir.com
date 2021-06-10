@@ -4,8 +4,8 @@
 {% block title %}{{ parent() }} | Gérer les villes{% endblock %}
 
 {% block body %}
-    <h1>Gérer les villes</h1>
-
+    <h2 class="title">Gérer les villes</h2>
+    <hr>
     <div class="table_complete">
         <table class="table table-hover table-stripped table_sortie ">
             <thead>
@@ -34,7 +34,7 @@
             <tr>
                 <td>{{ form_row(villesForm.nom, {'attr':{'class':'form-control'}}) }}</td>
                 <td>{{ form_row(villesForm.code_Postal, {'attr':{'class':'form-control'}}) }}</td>
-                <td><button class="btn btn-outline-secondary" >Ajouter</button></td>
+                <td class="btn_add_city "><button class="btn btn-outline-primary" >Ajouter</button></td>
             </tr>
             {{ form_end(villesForm) }}
             </tbody>

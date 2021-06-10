@@ -22,15 +22,15 @@
         <div>
 
             <div class="detail_profil">
-                <div class="profil_firstName"><b>Prénom : </b>{{ user.prenom | capitalize }} </div>
+                <div class="profil"><b>Prénom : </b>{{ user.prenom | capitalize }} </div>
 
-                <div class="profil_name"><b>Nom : </b>{{ user.nom| capitalize }}</div>
+                <div class="profil"><b>Nom : </b>{{ user.nom| capitalize }}</div>
 
-                <div class="profil_phone"><b>Téléphone</b> : {{ user.telephone| capitalize }}</div>
+                <div class="profil"><b>Téléphone</b> : {{ user.telephone| capitalize }}</div>
 
-                <div class="profil_email"><b>Email : </b>{{ user.email| capitalize }}</div>
+                <div class="profil"><b>Email : </b>{{ user.email| capitalize }}</div>
 
-                <div class="profil_city"><b>Ville de rattachement : </b>{{ user.villes.nom| capitalize }}</div>
+                <div class="profil"><b>Ville de rattachement : </b>{{ user.villes.nom| capitalize }}</div>
                 <div class="btn_profil">
                     <a href="{{ path('accueil_home') }}">
                         <button class="btn btn-primary" type="button">Retour</button>
