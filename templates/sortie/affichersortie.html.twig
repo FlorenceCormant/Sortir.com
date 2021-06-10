@@ -1,47 +1,65 @@
-{% extends 'base.html.twig' %}{% block body %}<h2 class="title">Détail de la sortie</h2>
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2 class="title">Détail de la sortie</h2>
     <br>
     <div class="sortie">
         <div class="info_sortie">
             <div class="detail_profil">
                 <div class="profil_firstName"><b>Nom de la sortie : </b>{{ detailsortie.nom }}</div>
+
                 <div class="profil_firstName"><b>Date de la sortie
-                        : </b> {{ detailsortie.dateDebut|date("Y-m-d H:i:s") }}</div>
+                        : </b> {{ detailsortie.dateDebut|date("Y-m-d H:i:s") }}
+                </div>
+
                 <div class="profil_firstName"><b>Date de cloture des inscription
                         : </b> {{ detailsortie.dateCloture|date("Y-m-d") }}</div>
+
                 <div class="profil_firstName"><b>Nombre maximum d'inscriptions
-                        : </b> {{ detailsortie.nbInscriptionsMax }}</div>
+                        : </b> {{ detailsortie.nbInscriptionsMax }}
+                </div>
+
                 <div class="profil_firstName"><b>Durée de la sortie </b> {{ detailsortie.duree }} heures</div>
+
                 <div class="profil_firstName"><b>Infos complémentaires : </b> {{ detailsortie.descriptionInfos }}</div>
+
                 <div class="profil_firstName"><b>Ville de la sortie : </b> {{ detailsortie.noLieu.noVille.nom }}</div>
             </div>
-            <div class="detail_profil">
-                <div class="profil_firstName"><b>Rue : </b> {{ detailsortie.noLieu.rue }}</div>
-                <div class="profil_firstName"><b>Code postal : </b> {{ detailsortie.noLieu.noVille.codePostal }}</div>
-                <div class="profil_firstName"><b>Latitude : </b> {{ detailsortie.noLieu.latitude }}</div>
-                <div class="profil_firstName"><b>Longitude : </b> {{ detailsortie.noLieu.longitude }}</div>
-                {% if detailsortie.noEtat.id != 2 and detailsortie.noEtat.id != 3  and detailsortie.noEtat.id != 4 and detailsortie.noEtat.id != 5 %}
-                    {% if utilisateur != null %}
-                        {% if detailsortie.organisateur.id != app.user.id %}
-                            {% if date(detailsortie.dateCloture) > date() %}
-                                {% if detailsortie.nbInscriptionsMax > detailsortie.inscriptions.count %}
-                                    {% if not detailsortie.checkIfInscrit(app.user) %}
-                                        <button class="btn btn-outline-secondary"><a  href="{{ path('inscription', {'id' : detailsortie.id }) }}">S'inscrire</a></button>
-                                    {% else %}
-                                        <button class="btn btn-outline-secondary"><a href="{{ path('deleteinscription', {'id' : detailsortie.id }) }}">Se desister</a></button>
-                                    {% endif %}
 
-                                {% endif %}
-                            {% endif %}
+            <div class="detail_profil">
+    {% if detailsortie.noEtat.id != 2 and detailsortie.noEtat.id != 3  and detailsortie.noEtat.id != 4 and detailsortie.noEtat.id != 5 %}
+        {% if utilisateur != null %}
+            {% if detailsortie.organisateur.id != app.user.id %}
+                {% if date(detailsortie.dateCloture) > date() %}
+                    {% if detailsortie.nbInscriptionsMax > detailsortie.inscriptions.count %}
+                        {% if not detailsortie.checkIfInscrit(app.user) %}
+                            <button class="btn btn-outline-secondary"><a  href="{{ path('inscription', {'id' : detailsortie.id }) }}">S'inscrire</a></button>
+                        {% else %}
+                            <button class="btn btn-outline-secondary"><a href="{{ path('deleteinscription', {'id' : detailsortie.id }) }}">Se desister</a></button>
                         {% endif %}
+
                     {% endif %}
                 {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+                <div class="profil_firstName"><b>Lieu de la sortie : </b> {{ detailsortie.noLieu.nom }}</div>
+
+                <div class="profil_firstName"><b>Rue : </b> {{ detailsortie.noLieu.rue }}</div>
+
+                <div class="profil_firstName"><b>Code postal : </b> {{ detailsortie.noLieu.noVille.codePostal }}</div>
+
+                <div class="profil_firstName"><b>Latitude : </b> {{ detailsortie.noLieu.latitude }}</div>
+
+                <div class="profil_firstName"><b>Longitude : </b> {{ detailsortie.noLieu.longitude }}</div>
             </div>
         </div>
-
-
         <br>
         <div class="participants">
             <h2 class="title">Liste des participants inscrits :</h2>
+
             <div class="table_complete">
                 <table class="table table-hover table-stripped table_sortie ">
                     <thead>
@@ -50,17 +68,23 @@
                         <th class="nom_participant_sortie" scope="col">Nom</th>
                     </tr>
                     </thead>
-                    {% for details in detail %}<tbody>
-                    <tr>
-                        <td>
-                            <a href="{{ path('detailutilisateur', {'id' : details.userinscription.id}) }}">{{ details.userinscription.pseudo }}</a>
-                        </td>
-                        <td>{{ details.userinscription.prenom }} {{ details.userinscription.nom }}</td>
-                        <th></th>
-                    </tr>
+
+                    {% for details in detail %}
+                        <tbody>
+                        <tr>
+                            <td>
+                                <a href="{{ path('detailutilisateur', {'id' : details.userinscription.id}) }}">{{ details.userinscription.pseudo }}</a>
+                            </td>
+                            <td>{{ details.userinscription.prenom }} {{ details.userinscription.nom }}</td>
+                            <th></th>
+
+                        </tr>
                         </tbody>
-                    {% endfor %}</table>
+                    {% endfor %}
+                </table>
+
             </div>
         </div>
     </div>
 {% endblock %}
+

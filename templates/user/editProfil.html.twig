@@ -9,16 +9,41 @@
 
     <div>
         {{ form_start(profilForm) }}
-        {{ form_widget(profilForm) }}
-        <button class="btn btn-outline-danger">Modifier</button>
-        {{ form_end(profilForm) }}
-    </div>
-    <div class="password-div">
-        <a href="{{ path('change_Password') }}" class="btn btn-outline-dark" role="button">
-            Modifier mon mot de passe
-        </a>
-    </div>
+        <div class="form container">
+            <div class="form-group ">
+                {{ form_row(profilForm.pseudo, {'attr':{'class':'form-control'}}) }}
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    Prenom : {{ form_widget(profilForm.prenom, {'attr':{'class':'form-control'}}) }}
+                    Nom : {{ form_widget(profilForm.nom, {'attr':{'class':'form-control'}}) }}
+                </div>
+                <div class="form-group col">
+                    Téléphone : {{ form_widget(profilForm.telephone, {'attr':{'class':'form-control'}}) }}
+                    Email : {{ form_widget(profilForm.email, {'attr':{'class':'form-control'}}) }}
+                </div>
+                <div class="form-group col">
+                    Ville : {{ form_widget(profilForm.villes, {'attr':{'class':'form-control'}}) }}
+                    Photo : {{ form_widget(profilForm.photo, {'attr':{'class':'custom-file'}}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    Mot de passe : {{ form_widget(profilForm.plainPassword.first, {'attr':{'class':'form-control'}}) }}
+                    Confirmation : {{ form_widget(profilForm.plainPassword.second, {'attr':{'class':'form-control'}}) }}
+                </div>
+            </div>
+            <div class="password_profil">
+                <button class="btn btn-outline-danger">Modifier</button>
+                {{ form_end(profilForm) }}
 
+
+                <a href="{{ path('change_Password') }}" class="btn btn-outline-dark" role="button">
+                    Modifier mon mot de passe
+                </a>
+            </div>
+        </div>
+    </div>
 
 
 {% endblock %}
