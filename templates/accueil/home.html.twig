@@ -16,7 +16,7 @@
     </div>
     <div>
         <div class="button_test">
-            <button class="button_show btn btn-primary">Filtrer les recherches</button>
+            <button class="button_show btn btn-outline-success">Filtrer les recherches</button>
         </div>
         <div class="form-group formulaire" id="form">
             {{ form_start(form) }}
@@ -38,11 +38,11 @@
                 <label for="passe">{{ form_widget(form.passe,{'attr':{'class':'form-check-input'}}) }} Sorties
                     passées</label>
             </div>
-            <button class="btn btn-primary">Rechercher</button>
+            <button class="btn btn-outline-success">Rechercher</button>
             {{ form_end(form) }}
             <div class="button_form_close">
-                <button class="btn btn-primary reset" onclick="reset()">Réinitialiser la recherche</button>
-                <button class="button_close btn btn-primary">Fermer le filtre</button>
+                <button class="btn btn-outline-info reset" onclick="reset()">Réinitialiser la recherche</button>
+                <button class="button_close btn btn-outline-info">Fermer le filtre</button>
             </div>
 
         </div>
@@ -70,7 +70,7 @@
                         <tr>
 
                             <th >{{ sortie.nom }}</th>
-                            <td>{{ sortie.dateDebut|date('d/m/Y') }}</td>
+                            <td>{{ sortie.dateDebut|date('d/m/Y H:i:s') }}</td>
                             <td>{{ sortie.dateCloture|date('d/m/Y') }}</td>
                             <td> {{ sortie.inscriptions.count }} / {{ sortie.nbInscriptionsMax }}</td>
                             <td>{{ sortie.noEtat.libelle }}</td>
@@ -125,7 +125,7 @@
                     {% endif %}
                 {% endfor %}
             </table>
-            <a type="button" href="{{ path('create') }}" class="btn btn-primary">Créer une sortie</a>
+            <a type="button" href="{{ path('create') }}" class="btn btn-outline-info">Créer une sortie</a>
         </div>
 
     </div>

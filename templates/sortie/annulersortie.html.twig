@@ -2,15 +2,17 @@
 
 {% block body %}
 
-    <h1>Annuler la sortie</h1>
-
-    <p>Nom de la sortie : {{ annulsortie.nom}}</p>
-    <p>Date et heure de la sortie : {{ annulsortie.dateDebut|date("Y-m-d") }}</p>
-    <p>Ville organisatrice : {{ annulsortie.noLieu.noVille.nom }}</p>
-    <p>Lieu : {{ annulsortie.noLieu.nom }} {{ annulsortie.noLieu.rue }} {{ annulsortie.noLieu.noVille.codePostal }} {{ annulsortie.noLieu.noVille.nom }}</p>
+    <h3 class="title">Annuler la sortie</h3>
+    <hr>
+<div class="detail_profil">
+    <div class="profil"><b>Nom de la sortie : </b>{{ annulsortie.nom}}</div>
+    <div class="profil"><b>Date et heure de la sortie : </b>{{ annulsortie.dateDebut|date("Y-m-d H:i:s") }}</div>
+    <div class="profil"><b>Ville de la sortie : </b> Ville organisatrice : {{ annulsortie.noLieu.noVille.nom }}</div>
+    <div class="profil"><b>Lieu : </b>{{ annulsortie.noLieu.nom }} {{ annulsortie.noLieu.rue }} {{ annulsortie.noLieu.noVille.codePostal }} {{ annulsortie.noLieu.noVille.nom }}</div>
 {{ form_start(annulForm) }}
     {{ form_widget(annulForm) }}
-    <button name="valeurenregistrer" value="4" class="btn btn-outline-secondary">Annuler</button>
+    <button name="valeurenregistrer" value="4" class="btn btn-outline-danger">Annuler la sortie !!</button>
     {{ form_end((annulForm)) }}
+</div>
 {% endblock %}
 

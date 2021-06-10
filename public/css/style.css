@@ -141,6 +141,13 @@ body {
     width: 150px;
 }
 
+.sortie_photo img{
+    display: inline-block;
+    border-radius:50%;
+    height: 150px;
+    width: 150px;
+}
+
 .sortie{
     display: flex;
     flex-direction: row;
@@ -148,7 +155,7 @@ body {
     align-items: center;
 }
 
-.detail_profil div {
+.detail_profil .profil {
     margin-bottom:5%;
 }
 
@@ -159,4 +166,21 @@ body {
 .new_password{
     width: 50%;
     margin: auto;
+}
+
+.btn_back a {
+    color: black !important;
+}
+
+.btn_inscription{
+    text-align: center;
+    margin-top: 2%;
+}
+
+.btn_add_city{
+    vertical-align: bottom !important;
+}
+
+.delete_sortie{
+    color: black;
 }

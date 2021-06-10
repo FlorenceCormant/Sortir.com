@@ -7,7 +7,7 @@
 <div class="container-fluid pt-3">
     <div class="row">
         <div class="col">
-            <h3>Modifier la sortie</h3>
+            <h3 class="title">Modifier la sortie</h3>
             <hr>
         </div>
     </div>
@@ -39,17 +39,22 @@
         <div class="form-group">
             {{ form_row(sortieForm.description_infos , {'attr':{'class':'form-control'}})}}
         </div>
+
+        <div class="form-group">
+            {{ form_row(sortieForm.photo, {'attr':{'class':'custom-file'}}) }}
+        </div>
+
             <div class="form-group">
                 {{ form_row(sortieForm.noLieu , {'attr':{'class':'form-control'}}) }}
             </div>
 
             <div class="row">
                 {% if suppsortie.noEtat.id != 1 %}
-                <button name="valeurenregistrer" value="4" class="btn btn-outline-secondary">Enregistrer</button>
+                <button name="valeurenregistrer" value="4" class="btn btn-outline-info">Enregistrer</button>
                 {% endif %}
-                <button name="valeurenregistrer" value="1" class="btn btn-outline-secondary">Publier la sortie</button>
-                <div class="col"><button class="btn btn-outline-secondary"><a class="link_button" href="{{ path('supprimersortie', {'id' : suppsortie.id}) }}">Supprimer la sortie</a></button></div>
-                <button class="btn btn-outline-secondary"> <a href="{{ path('accueil_home')}}">Annuler</a></button>
+                <button name="valeurenregistrer" value="1" class="btn btn-outline-primary">Modifier la sortie</button>
+                <div class="col"><button class="btn btn-outline-danger"><a class="link_button delete_sortie" href="{{ path('supprimersortie', {'id' : suppsortie.id}) }}">Supprimer la sortie</a></button></div>
+                <button class="btn btn-outline-info"> <a href="{{ path('accueil_home')}}">Annuler</a></button>
             </div>
         {{ form_end(sortieForm) }}
         </div>

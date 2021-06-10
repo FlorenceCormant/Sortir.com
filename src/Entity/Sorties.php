@@ -79,6 +79,11 @@ class Sorties
      */
     private $organisateur;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photo;
+
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
@@ -257,6 +262,18 @@ class Sorties
         {
             return ($inscription->getUserinscription() == $p);
         });
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(string $photo): self
+    {
+        $this->photo = $photo;
+
+        return $this;
     }
 
 

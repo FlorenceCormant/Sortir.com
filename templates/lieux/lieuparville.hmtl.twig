@@ -4,11 +4,8 @@
 {% block title %}{{ parent() }} | Gérer les lieux{% endblock %}
 
 {% block body %}
-    <h1>Gérer les villes</h1>
-
-
-
-
+    <h2 class="title">Gérer les villes</h2>
+    <hr>
     <div class="table_complete">
         <table class="table table-hover table-stripped table_sortie ">
             <thead>
@@ -25,11 +22,11 @@
             {% for lieux in lieu %}
                 <tbody>
                 <tr>
-                    <td>{{lieux.noVille.nom}}</td>
-                    <td>{{lieux.nom}}</td>
-                    <td>{{lieux.rue}}</td>
-                    <td>{{lieux.latitude}}</td>
-                    <td>{{lieux.longitude}}</td>
+                    <td>{{ lieux.noVille.nom }}</td>
+                    <td>{{ lieux.nom }}</td>
+                    <td>{{ lieux.rue }}</td>
+                    <td>{{ lieux.latitude }}</td>
+                    <td>{{ lieux.longitude }}</td>
                     <td><a href="{{ path('modifierlieux', {'id' : lieux.id}) }}">Modifier</a></td>
                     <td><a href="{{ path('supprimerlieu', {'id' : lieux.id} ) }}">Supprimer</a></td>
 
@@ -48,7 +45,9 @@
                 <td>{{ form_row(lieuForm.rue, {'attr':{'class':'form-control'}}) }}</td>
                 <td>{{ form_row(lieuForm.latitude, {'attr':{'class':'form-control'}}) }}</td>
                 <td>{{ form_row(lieuForm.longitude, {'attr':{'class':'form-control'}}) }}</td>
-                <td><button class="btn btn-outline-secondary" >Ajouter</button></td>
+                <td class="btn_add_city">
+                    <button class="btn btn-outline-secondary">Ajouter</button>
+                </td>
             </tr>
             {{ form_end(lieuForm) }}
             </tbody>

@@ -15,9 +15,11 @@ use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use function Symfony\Component\String\s;
 
 
@@ -26,7 +28,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/create", name="create")
      */
-    public function createSortie(Request $request,EntityManagerInterface $entityManager): Response
+    public function createSortie(Request $request,EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
 
         $maValeur = $request->request->get("valeurenregistrer");
@@ -49,13 +51,37 @@ class SortieController extends AbstractController
         $sortieForm->handleRequest($request);
 
 
-        if($sortieForm->isSubmitted()){
+        if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
             $etat = $this->getDoctrine()
                 ->getRepository(Etats::class)
                 ->find($maValeur);
 
             $sortie->setNoEtat($etat);
+
+            //ajout photo
+            $photoFile = $sortieForm->get('photo')->getData();
+            if ($photoFile) {
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $photoFile->move(
+                        $this->getParameter('upload_photos_sorties_dir'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $sortie->setPhoto($newFilename);
+            }
+
 
             $entityManager->persist($sortie);
             $entityManager->flush();
@@ -97,20 +123,42 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/modification/{id}", name="modificationsortie")
      */
-    public function modifiersortie($id, Request $request, EntityManagerInterface $entityManager, SortiesRepository $sortiesRepository){
+    public function modifiersortie($id, Request $request, EntityManagerInterface $entityManager, SortiesRepository $sortiesRepository,SluggerInterface $slugger){
         $maValeur = $request->request->get("valeurenregistrer");
 
+        $userid = $this->getUser()->getId();
+        $organisateur = $this->getDoctrine()->getManager()
+            ->getRepository(Participants::class)
+            ->find($userid);
 
         $sortie = $sortiesRepository->find($id);
+        $sortie->setOrganisateur($organisateur);
+
         $form = $this->createForm(SortieFormType::class, $sortie);
         $form->handleRequest($request);
 
-        if($form->isSubmitted()){
+        if($form->isSubmitted() && $form->isValid()){
             $etat = $this->getDoctrine()
                 ->getRepository(Etats::class)
                 ->find($maValeur);
 
             $sortie->setNoEtat($etat);
+
+            //modification photo
+            $photoFile = $form->get('photo')->getData();
+            if ($photoFile) {
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
+                try {
+                    $photoFile->move(
+                        $this->getParameter('upload_photos_sorties_dir'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                }
+                $sortie->setPhoto($newFilename);
+            }
 
 
             $entityManager->persist($sortie);
@@ -148,10 +196,13 @@ class SortieController extends AbstractController
      */
     public function annulerSortie($id, Request $request, EntityManagerInterface $entityManager, SortiesRepository $sortiesRepository): Response{
 
-
-
+        $userid = $this->getUser()->getId();
+        $organisateur = $this->getDoctrine()->getManager()
+            ->getRepository(Participants::class)
+            ->find($userid);
 
         $sortie = $sortiesRepository->find($id);
+        $sortie->setOrganisateur($organisateur);
         $form = $this->createForm(AnnulationFormType::class, $sortie);
         $form->handleRequest($request);
 
