@@ -1,30 +1,38 @@
+<nav class="navbar navbar-default navbar-expand-lg navigation_bar">
+    <div class="container-fluid">
+        <a class="navbar-brand title_nav" href="{{ path('accueil_home') }}"><img src="{{ asset('img/Sortir.com.png') }}"
+                                                                                 alt="Logo Sortir.com" width="40%"></a>
+        <button class="navbar-toggler button_ham" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse navigation_bar_item" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item menu_link"><a class="nav-link active" aria-current="page" href="{{ path('accueil_home') }}">Accueil</a>
+                </li>
+                {% if is_granted("ROLE_ADMIN") %}
+                    <li class="nav-item menu_link"><a class="nav-link" href="{{ path('gerervilles') }}">Villes</a></li>
+                {% endif %}
+                {% if app.user != null %}
+                    <li class="nav-item menu_link"><a class="nav-link" href="{{ path('user_profil',{'id' : app.user.id}) }}">Mon
+                            profil</a></li>
+                    <li class="nav-item menu_link"><a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                {% endif %}
+
+                {% if app.user == null %}
+                    <li class="nav-item menu_link"><a class="nav-link" href="{{ path('app_login') }}">Se connecter</a></li>
+                    <li class="nav-item menu_link"><a class="nav-link" href="{{ path('app_register') }}">Créer un compte</a></li>
+                {% endif %}
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <nav class="navbar navbar-expand-md navigation_bar">
 
-    <a class="navbar-brand title_nav" href="{{ path('accueil_home') }}"><img src="{{ asset('img/Sortir.com.png') }}"
-                                                                             alt="Logo Sortir.com" width="40%"></a>
-    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
     <div class="collapse navbar-collapse navigation_bar_item" id="navbar">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ path('accueil_home') }}">Accueil</a>
-            </li>
-            {% if is_granted("ROLE_ADMIN") %}
-                <li class="nav-item"><a class="nav-link" href="{{ path('gerervilles') }}">Villes</a></li>
-            {% endif %}
-            {% if app.user != null %}
-                <li class="nav-item"><a class="nav-link" href="{{ path('user_profil',{'id' : app.user.id}) }}">Mon
-                        profil</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a></li>
-            {% endif %}
 
-            {% if app.user == null %}
-                <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}">Se connecter</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ path('app_register') }}">Créer un compte</a></li>
-            {% endif %}
-
-
-        </ul>
     </div>
 
 </nav>
