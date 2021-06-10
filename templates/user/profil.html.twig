@@ -11,7 +11,11 @@
     <hr>
 
     <div class="user_photo">
+        {% if app.user.photo==null %}
+        <img src="{{ asset('img/avatar.jpg') }}" alt="avatar">
+        {% else %}
         <img src="{{ asset('img/photos/photoUser/' ~ user.photo ) }}" alt="{{ user.pseudo }}">
+        {% endif %}
     </div>
 
     <div>
