@@ -7,7 +7,7 @@
 <div class="detail_profil">
     {% if detailparticipant.organisateur.photo != null %}
     <div class="user_photo">
-        <img src="{{ asset('img/photos/' ~ detailparticipant.organisateur.photo ) }}" alt="{{ detailparticipant.organisateur.pseudo }}">
+        <img src="{{ asset('img/photos/photoUser' ~ detailparticipant.organisateur.photo ) }}" alt="{{ detailparticipant.organisateur.pseudo }}">
     </div>
     {% endif %}
     {% if detailparticipant.organisateur.photo == null %}
