@@ -237,6 +237,11 @@ class SortieController extends AbstractController
      */
     public function detailparticipant($id, SortiesRepository $sortiesRepository){
 
+        $userid = $this->getUser()->getId();
+        $organisateur = $this->getDoctrine()->getManager()
+            ->getRepository(Participants::class)
+            ->find($userid);
+
         $sortie = $sortiesRepository->find($id);
 
         return $this->render('sortie/afficherparticipant.html.twig',[

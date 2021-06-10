@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @DiscriminatorColumn(name="TYPE_ENTITE", type="string")
  * @DiscriminatorMap({"user" = "User", "participants" = "Participants"})
  *
- * @UniqueEntity(fields={"pseudo"}, message="There is already an account with this pseudo")
+ * @UniqueEntity(fields={"pseudo"}, message="Un compte existe déjà avec ce pseudo")
  */
 
 
@@ -54,6 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $nom;
 
     /**
+     * @Assert\Type("string")
      * @ORM\Column(type="string", length=50)
      */
     private $prenom;
@@ -64,7 +65,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $email;
 
     /**
-     * @Assert\Type("int")
      * @ORM\Column(type="string", length=15, nullable=true)
      */
     private $telephone;

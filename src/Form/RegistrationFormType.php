@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Participants;
 use App\Entity\Villes;
-use Doctrine\DBAL\Types\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -12,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
@@ -23,10 +23,16 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('pseudo')
-            ->add("prenom")
+            ->add('pseudo', TextType::class,[
+                'invalid_message' => 'Pseudo déjà utilisé'
+            ])
+            ->add("prenom",TextType::class,[
+
+            ])
+
             ->add("nom")
             ->add("telephone",NumberType::class,[
+                'invalid_message' => 'Seuls les chiffres sont autorisés'
             ])
             ->add('email', EmailType::class, [
                 'attr' => ['autocomplete' => 'email'],
@@ -65,11 +71,11 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => "Merci d'entrer un mot de passe",
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Le mot de passe doit contenir au minimum 6 caracteres',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
