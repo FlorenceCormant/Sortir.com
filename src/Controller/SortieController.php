@@ -126,8 +126,14 @@ class SortieController extends AbstractController
     public function modifiersortie($id, Request $request, EntityManagerInterface $entityManager, SortiesRepository $sortiesRepository,SluggerInterface $slugger){
         $maValeur = $request->request->get("valeurenregistrer");
 
+        $userid = $this->getUser()->getId();
+        $organisateur = $this->getDoctrine()->getManager()
+            ->getRepository(Participants::class)
+            ->find($userid);
 
         $sortie = $sortiesRepository->find($id);
+        $sortie->setOrganisateur($organisateur);
+
         $form = $this->createForm(SortieFormType::class, $sortie);
         $form->handleRequest($request);
 
@@ -138,7 +144,7 @@ class SortieController extends AbstractController
 
             $sortie->setNoEtat($etat);
 
-       /*     //modification photo
+            //modification photo
             $photoFile = $form->get('photo')->getData();
             if ($photoFile) {
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -152,7 +158,7 @@ class SortieController extends AbstractController
                 } catch (FileException $e) {
                 }
                 $sortie->setPhoto($newFilename);
-            }*/
+            }
 
 
             $entityManager->persist($sortie);
@@ -190,10 +196,13 @@ class SortieController extends AbstractController
      */
     public function annulerSortie($id, Request $request, EntityManagerInterface $entityManager, SortiesRepository $sortiesRepository): Response{
 
-
-
+        $userid = $this->getUser()->getId();
+        $organisateur = $this->getDoctrine()->getManager()
+            ->getRepository(Participants::class)
+            ->find($userid);
 
         $sortie = $sortiesRepository->find($id);
+        $sortie->setOrganisateur($organisateur);
         $form = $this->createForm(AnnulationFormType::class, $sortie);
         $form->handleRequest($request);
 

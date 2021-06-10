@@ -46,8 +46,8 @@ class SortieFormType extends AbstractType
                 'class' => Lieux::class,
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un lieu'])
-         /*   ->add('photo', FileType::class, [
-                'label' =>'Photo',
+            ->add('photo', FileType::class, [
+                'label' =>'Photo : ',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
@@ -58,7 +58,7 @@ class SortieFormType extends AbstractType
                         ]
                     )
                 ]
-            ])*/
+            ])
         ;
     }
 

@@ -3,13 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Participants;
-use App\Entity\User;
-use App\Form\ProfilFormType;
 use App\Form\RegistrationFormType;
-use App\ManageEntity\UpdateEntity;
 use App\Repository\UserRepository;
-use App\Security\AppAuthenticator;
-use App\Upload\UserImage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -17,8 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class RegistrationController extends AbstractController
@@ -52,7 +45,9 @@ class RegistrationController extends AbstractController
             // do anything else you need here, like send an email
 
 
-            /*   return $guardHandler->authenticateUserAndHandleSuccess(
+            /*
+            // fonction qui permet de rester connecté une fois loggué
+                return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
                 $authenticator,
