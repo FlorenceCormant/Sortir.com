@@ -23,7 +23,7 @@
 
                 </div>
                 <div class="form-group col">
-                    Date fin : {{ form_widget(sortieForm.date_cloture) }}
+                    Date cloture : {{ form_widget(sortieForm.date_cloture) }}
                 </div>
             </div>
             <div class="row">
@@ -39,6 +39,11 @@
             <div class="form-group">
                 {{ form_row(sortieForm.description_infos , {'attr':{'class':'form-control'}}) }}
             </div>
+
+            <div class="form-group">
+                {{ form_row(sortieForm.photo, {'attr':{'class':'custom-file'}}) }}
+            </div>
+
             <div class="row">
                 <div class="form-group col">
                     {{ form_row(sortieForm.noLieu , {'attr':{'class':'form-control'}}) }}

@@ -141,6 +141,13 @@ body {
     width: 150px;
 }
 
+.sortie_photo img{
+    display: inline-block;
+    border-radius:50%;
+    height: 150px;
+    width: 150px;
+}
+
 .sortie{
     display: flex;
     flex-direction: row;

@@ -39,6 +39,11 @@
         <div class="form-group">
             {{ form_row(sortieForm.description_infos , {'attr':{'class':'form-control'}})}}
         </div>
+
+        <div class="form-group">
+            {{ form_row(sortieForm.photo, {'attr':{'class':'custom-file'}}) }}
+        </div>
+
             <div class="form-group">
                 {{ form_row(sortieForm.noLieu , {'attr':{'class':'form-control'}}) }}
             </div>

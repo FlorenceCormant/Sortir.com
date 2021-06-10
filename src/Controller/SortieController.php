@@ -138,7 +138,7 @@ class SortieController extends AbstractController
 
             $sortie->setNoEtat($etat);
 
-       /*     //modification photo
+            //modification photo
             $photoFile = $form->get('photo')->getData();
             if ($photoFile) {
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -152,7 +152,7 @@ class SortieController extends AbstractController
                 } catch (FileException $e) {
                 }
                 $sortie->setPhoto($newFilename);
-            }*/
+            }
 
 
             $entityManager->persist($sortie);
