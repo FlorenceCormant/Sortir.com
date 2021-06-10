@@ -39,6 +39,13 @@
                 <div class="profil_firstName"><b>Latitude : </b> {{ detailsortie.noLieu.latitude }}</div>
 
                 <div class="profil_firstName"><b>Longitude : </b> {{ detailsortie.noLieu.longitude }}</div>
+                <div class="detail_profil">
+                    {% if detailsortie.photo != null %}
+                        <div class="sortie_pic">
+                            <img src="{{ asset('img/photos/photoSortie/' ~ detailsortie.photo ) }}" alt="{{ detailsortie.nom }}">
+                        </div>
+                    {% endif %}
+                </div>
             </div>
             <div class="btn_inscription">
                 {% if detailsortie.noEtat.id != 2 and detailsortie.noEtat.id != 3  and detailsortie.noEtat.id != 4 and detailsortie.noEtat.id != 5 %}
@@ -66,18 +73,7 @@
         <br>
 
 
-        <div class="detail_profil">
-            {% if detailsortie.photo == null %}
-                <div class="sortie_photo">
-                    <img src="{{ asset('img/randomavatar.png' ) }}" alt="{{ detailsortie.nom }}">
-                </div>
-            {% endif %}
-            {% if detailsortie.photo != null %}
-                <div class="sortie_photo">
-                    <img src="{{ asset('img/photos/photoSortie/' ~ detailsortie.photo ) }}" alt="{{ detailsortie.nom }}">
-                </div>
-            {% endif %}
-        </div>
+
 
         <div class="participants">
             <h2 class="title">Liste des participants inscrits :</h2>
