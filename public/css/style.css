@@ -75,6 +75,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 1%;
+    margin-top: 1%;
 }
 
 .button_form_close{
@@ -184,3 +186,4 @@ body {
 .delete_sortie{
     color: black;
 }
+
