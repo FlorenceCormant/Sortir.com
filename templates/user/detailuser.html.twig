@@ -19,18 +19,12 @@
         </div>
     {% endif %}
 
-
     <div>
 
         <div class="detail_profil">
             <div class="profil_firstName"><b>Prénom : </b>{{ user.prenom | capitalize }} </div>
 
-    <p>Pseudo : {{ user.pseudo }}</p>
-    <p>Prénom : {{ user.prenom}}</p>
-    <p>Nom : {{ user.nom }}</p>
-    <p>Téléphone : {{ user.telephone }}</p>
-    <p>Email : {{ user.email }}</p>
-    <button class="btn btn-outline-secondary"> <a href="{{ path('accueil_home')}}">Retour</a></button>
+
             <div class="profil_name"><b>Nom : </b>{{ user.nom| capitalize }}</div>
 
             <div class="profil_phone"><b>Téléphone</b> : {{ user.telephone| capitalize }}</div>
