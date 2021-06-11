@@ -23,16 +23,15 @@ class VillesController extends AbstractController
 
     public function gererVilles(VillesRepository  $villesRepository, Request $request, EntityManagerInterface $entityManager)
     {
+        $search = new Villes();
 
-        $villes = $villesRepository->findAll();
 
-        $ville = new Villes();
-        $form = $this->createForm(VillesFormType::class, $ville);
+        $form = $this->createForm(VillesFormType::class, $search);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
 
-            $entityManager->persist($ville);
+            $entityManager->persist($search);
             $entityManager->flush();
 
             $this->addFlash('succes', 'Villes créer !!');
@@ -40,11 +39,25 @@ class VillesController extends AbstractController
         }
 
 
+        $form2 = $this->createForm(VillesSearchFormType::class, $search);
+        $form2->handleRequest($request);
+        $villes = $villesRepository->findAll();
+        if ($form2->isSubmitted())  {
+            $search = $form->getData();
 
+            //Si tous les champs sont null, on retourne toutes les sorties
+            if ($search->getNom()==null) {
+                $villes = $villesRepository->findAll();
+            }else {
+                //Sinon on fait appelle à la méthode qui trie en fonction de ce qui est null et de ce qui ne l'est pas
+                $villes = $villesRepository->total($search);
+            }
+        }
 
         return $this->render('villes/gererlesvilles.html.twig', [
             'villes' => $villes,
-            'villesForm' => $form->createView()
+            'villesForm' => $form->createView(),
+            'villesearchForm' => $form2->createView(),
         ]);
 
     }

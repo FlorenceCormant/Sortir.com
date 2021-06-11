@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Lieux;
 use App\Form\LieuparvilleformType;
 use App\Form\LieuxFormType;
+use App\Form\ModifierLieuFormType;
+use App\Form\TrierLieuxFormType;
 use App\Repository\LieuxRepository;
 use App\Repository\VillesRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -48,35 +50,45 @@ class LieuxController extends AbstractController
     public function lieuxparville( LieuxRepository $lieuxRepository,VillesRepository $villesRepository,Request $request, EntityManagerInterface $entityManager, $id){
 
 
+        $ville = $villesRepository->find($id);
 
-       $lieux = $lieuxRepository->chercherlieuparville($id);
-
-       $ville = $villesRepository->find($id);
-
-
-
-       $lieu = new Lieux();
-       $form = $this->createForm(LieuparvilleformType::class, $lieu);
+       $search = new Lieux();
+       $form = $this->createForm(LieuparvilleformType::class, $search);
        $form->handleRequest($request);
 
         if ($form->isSubmitted()){
 
-            $lieu->setNoVille($ville);
+            $search->setNoVille($ville);
 
-            $entityManager->persist($lieu);
+            $entityManager->persist($search);
             $entityManager->flush();
 
             $this->addFlash('succes','Lieu créer !!');
             return $this->redirectToRoute('ajouterunlieu', ['id' => $id]);
         }
 
+        $form2 = $this->createForm(TrierLieuxFormType::class, $search);
+        $form2->handleRequest($request);
+        $lieux = $lieuxRepository->chercherlieuparville($ville);
+        if ($form2->isSubmitted())  {
+            $search = $form->getData();
+
+            //Si tous les champs sont null, on retourne toutes les sorties
+            if ($search->getNom()==null) {
+                $lieux = $lieuxRepository->chercherlieuparville($ville);
+            }else {
+                //Sinon on fait appelle à la méthode qui trie en fonction de ce qui est null et de ce qui ne l'est pas
+                $lieux = $lieuxRepository->total($search, $ville);
+            }
+        }
 
 
-       return $this->render('lieux/lieuparville.hmtl.twig', [
+        return $this->render('lieux/lieuparville.hmtl.twig', [
 
            'ville' => $ville,
            'lieu' => $lieux,
-           'lieuForm' => $form->createView()
+           'lieuForm' => $form->createView(),
+           'lieuxSearchForm' => $form2->createView(),
        ]);
 
 
@@ -111,7 +123,7 @@ class LieuxController extends AbstractController
 
         $lieu = $lieuxRepository->find($id);
        $idretour =  $lieu->getNoVille();
-        $form = $this->createForm(LieuxFormType::class, $lieu);
+        $form = $this->createForm(ModifierLieuFormType::class, $lieu);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()){
@@ -124,7 +136,8 @@ class LieuxController extends AbstractController
         }
 
         return $this->render('lieux/modifierlieu.html.twig', [
-            'lieuForm' => $form->createView()
+            'lieuForm' => $form->createView(),
+            'lieu' => $lieu
         ]);
     }
 

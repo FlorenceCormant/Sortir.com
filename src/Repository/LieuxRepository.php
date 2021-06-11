@@ -29,4 +29,22 @@ class LieuxRepository extends ServiceEntityRepository
             return $queryBuilder;
     }
 
+    public function total(Lieux $lieux, $villesid)
+    {
+        $qb = $this->createQueryBuilder('s');
+        if ($lieux->getNom()) { //Requete pour une recherche par mot clé
+            $qb->Where('s.nom LIKE :word');
+            $qb->andWhere('s.no_ville =?1');
+            $qb->setParameter(1, $villesid);
+            $qb->setParameter('word', '%' . $lieux->getNom() . '%');
+        }
+
+        $query = $qb->getQuery();
+        $result = $query->getResult();
+        return $result;
+
+
+    }
+
+
 }
