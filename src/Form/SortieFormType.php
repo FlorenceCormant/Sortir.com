@@ -24,9 +24,9 @@ class SortieFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', TextType::class, [
+            ->add('nom', TextType::class,[
                 'label' => 'Nom de la sortie :'
-            ])
+                ])
             ->add('date_debut', DateTimeType::class, [
                 'html5' => true,
                 'widget' => 'single_text'
@@ -36,8 +36,10 @@ class SortieFormType extends AbstractType
                 'widget' => 'single_text'
             ])
             ->add('nb_inscriptions_max')
-            ->add('duree')
-            ->add('description_infos', TextareaType::class, [
+            ->add('duree', NumberType::class,[
+                'label' => 'Durée en heure : '
+            ])
+            ->add('description_infos', TextareaType::class,[
                 'label' => 'Description et infos :'
             ])
             ->add('noLieu', EntityType::class, [
@@ -59,6 +61,7 @@ class SortieFormType extends AbstractType
                 ]
             ]);
     }
+
 
 
     public function configureOptions(OptionsResolver $resolver)

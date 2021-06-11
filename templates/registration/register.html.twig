@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon Profil{% endblock %}
+{% block title %}Créer un compte{% endblock %}
 
 {% block body %}
     {% for flashError in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}
 
-    <h1 class="title">Mon Profil</h1>
+    <h1 class="title">Création de mon compte</h1>
     <hr>
     <div class="form_register">
         {{ form_start(registrationForm) }}
@@ -24,6 +24,7 @@
             : {{ form_widget(registrationForm.plainPassword.first,{'attr':{'class':'form-control'}}) }}</label>
         <label for="registration_form[plainPassword][second]">Confirmation mot de passe
             : {{ form_widget(registrationForm.plainPassword.second,{'attr':{'class':'form-control'}}) }}</label>
+        <label for="registration_form[photo]">Photo de profil : {{ form_widget(registrationForm.photo) }}</label>
 
         <div class="button_account">
             <button type="submit" class="btn btn-primary">Enregistrer</button>

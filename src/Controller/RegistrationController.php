@@ -20,7 +20,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request,
+    public function register(Request $request,SluggerInterface $slugger,
                              UserPasswordEncoderInterface $passwordEncoder //,
         //    GuardAuthenticatorHandler $guardHandler,
         //  AppAuthenticator $authenticator
@@ -31,6 +31,29 @@ class RegistrationController extends AbstractController
         $registrationForm->handleRequest($request);
 
         if ($registrationForm->isSubmitted() && $registrationForm->isValid()) {
+
+            //ajout photo
+            $photoFile = $registrationForm->get('photo')->getData();
+            if ($photoFile) {
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $photoFile->move(
+                        $this->getParameter('upload_photos_users_dir'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $user->setPhoto($newFilename);
+            }
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
@@ -44,15 +67,6 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
             // do anything else you need here, like send an email
 
-
-            /*
-            // fonction qui permet de rester connecté une fois loggué
-                return $guardHandler->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                $authenticator,
-                'main' // firewall name in security.yaml
-            ); */
 
             return $this->redirectToRoute('accueil_home');
         }
