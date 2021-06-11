@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @DiscriminatorColumn(name="TYPE_ENTITE", type="string")
  * @DiscriminatorMap({"user" = "User", "participants" = "Participants"})
  *
- * @UniqueEntity(fields={"pseudo"}, message="There is already an account with this pseudo")
+ * @UniqueEntity(fields={"pseudo"}, message="Il y'a déjà un compte avec ce pseudo")
  */
 
 
@@ -32,6 +32,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Le pseudo ne peut etre vide")
+     * * @Assert\Length(
+     *     min=2,
+     *     max=50,
+     *     minMessage="Le pseudo doit au moins faire 2 caractères",
+     *     maxMessage="Le pseudo ne peut faire plus de 50 caractères",
+     * )
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $pseudo;
@@ -49,11 +56,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @Assert\Type("string")
+     * @Assert\NotBlank(message="Le nom ne peut etre vide ")
      * @ORM\Column(type="string", length=50)
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank(message="Le prenom ne peut etre vide")
      * @ORM\Column(type="string", length=50)
      */
     private $prenom;

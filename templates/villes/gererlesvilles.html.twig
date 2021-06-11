@@ -41,6 +41,7 @@
                 <tbody>
                 <tr>
                     <td scope="row">{{ ville.nom}}</td>
+
                     <td>{{ ville.codePostal }}</td>
                     <td><a href="{{ path('modifiervilles', {'id' : ville.id}) }}">Modifier</a></td>
                     <td><a href="{{ path('supprimervilles', {'id' : ville.id} ) }}">Supprimer</a></td>
@@ -53,7 +54,10 @@
             {{ form_start(villesForm) }}
             <tr>
                 <td>{{ form_row(villesForm.nom, {'attr':{'class':'form-control'}}) }}</td>
+                {{ form_errors(villesForm.nom) }}
+
                 <td>{{ form_row(villesForm.code_Postal, {'attr':{'class':'form-control'}}) }}</td>
+                {{ form_errors(villesForm.code_Postal) }}
                 <td class="btn_add_city "><button class="btn btn-outline-primary" >Ajouter</button></td>
             </tr>
             {{ form_end(villesForm) }}

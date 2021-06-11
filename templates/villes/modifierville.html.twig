@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Create Sortie{% endblock %}
+{% block title %}Modifier la ville{% endblock %}
 
 {% block body %}
 
     <div class="container-fluid pt-3">
         <div class="row">
             <div class="col">
-                <h3>Modifier la sortie</h3>
+                <h3 class="title">Modifier la ville</h3>
                 <hr>
             </div>
         </div>
@@ -16,10 +16,12 @@
         <div class="form container">
             <div class="form-group ">
               Nom : {{ form_row(villesForm.nom, {'attr':{'class':'form-control'}}) }}
+                {{ form_errors(villesForm.nom) }}
             </div>
             <div class="row">
                 <div class="form-group col" >
                    Code Postal : {{ form_row(villesForm.code_Postal, {'attr':{'class':'form-control'}})}}
+                    {{ form_errors(villesForm.code_Postal) }}
                 </div>
             {{ form_end(villesForm) }}
     </div>

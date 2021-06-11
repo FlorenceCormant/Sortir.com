@@ -18,6 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class SortieFormType extends AbstractType
 {
@@ -37,7 +38,10 @@ class SortieFormType extends AbstractType
             ])
             ->add('nb_inscriptions_max')
             ->add('duree', NumberType::class,[
-                'label' => 'Durée en heure : '
+                'label' => 'Durée en heure : ',
+                'constraints' =>[
+                    new Regex('"^[0-9]+$"',"Le format n'est pas le bon")
+                ]
             ])
             ->add('description_infos', TextareaType::class,[
                 'label' => 'Description et infos :'
