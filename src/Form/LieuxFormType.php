@@ -18,7 +18,7 @@ class LieuxFormType extends AbstractType
                 'label'=> 'Ville',
                 'class' => Villes::class,
                 'choice_label' => 'nom',
-                'placeholder' => 'Choisir un lieu'])
+                'placeholder' => 'Choisir une ville'])
             ->add('nom')
             ->add('rue')
             ->add('latitude')

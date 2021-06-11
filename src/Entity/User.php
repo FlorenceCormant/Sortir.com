@@ -64,7 +64,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $email;
 
     /**
-     * @Assert\Type("int")
+     * @Assert\Type(type =  "string")
      * @ORM\Column(type="string", length=15, nullable=true)
      */
     private $telephone;
