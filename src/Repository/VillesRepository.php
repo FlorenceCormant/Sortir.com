@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\PropertySearch;
+
 use App\Entity\Villes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,6 +19,23 @@ class VillesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Villes::class);
     }
+
+    public function total(Villes $villes)
+    {
+        $qb = $this->createQueryBuilder('s');
+        if ($villes->getNom()) { //Requete pour une recherche par mot clé
+            $qb->Where('s.nom LIKE :word');
+            $qb->setParameter('word', '%' . $villes->getNom() . '%');
+        }
+
+        $query = $qb->getQuery();
+        $result = $query->getResult();
+        return $result;
+
+
+    }
+
+
 
 
 }

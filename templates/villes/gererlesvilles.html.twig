@@ -4,8 +4,28 @@
 {% block title %}{{ parent() }} | Gérer les villes{% endblock %}
 
 {% block body %}
-    <h2 class="title">Gérer les villes</h2>
-    <hr>
+
+
+
+
+<div> <h2 class="title">Gérer les villes</h2></div>
+
+    <div class="button_test">
+        <button class="button_show btn btn-outline-success">Filtrer les recherches</button>
+    </div>
+    <div class="form-group formulaire" id="form">
+        {{ form_start(villesearchForm) }}
+        <div class="label_form">
+            <label for="nom">Le nom de la ville contient : {{ form_widget(villesearchForm.nom,{'attr':{'class':'form-control'}}) }}</label>
+        </div>
+        <button class="btn btn-outline-success">Rechercher</button>
+        {{ form_end(villesearchForm) }}
+        <div class="button_form_close">
+        </div>
+
+    </div>
+
+
     <div class="table_complete">
         <table class="table table-hover table-stripped table_sortie ">
             <thead>

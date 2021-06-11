@@ -24,9 +24,9 @@ class SortieFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', TextType::class,[
+            ->add('nom', TextType::class, [
                 'label' => 'Nom de la sortie :'
-                ])
+            ])
             ->add('date_debut', DateTimeType::class, [
                 'html5' => true,
                 'widget' => 'single_text'
@@ -42,14 +42,13 @@ class SortieFormType extends AbstractType
             ->add('description_infos', TextareaType::class,[
                 'label' => 'Description et infos :'
             ])
-
             ->add('noLieu', EntityType::class, [
-                'label'=> 'Lieu :',
+                'label' => 'Lieu :',
                 'class' => Lieux::class,
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un lieu'])
             ->add('photo', FileType::class, [
-                'label' =>'Photo : ',
+                'label' => 'Photo : ',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
@@ -60,10 +59,8 @@ class SortieFormType extends AbstractType
                         ]
                     )
                 ]
-            ])
-        ;
+            ]);
     }
-
 
 
     public function configureOptions(OptionsResolver $resolver)

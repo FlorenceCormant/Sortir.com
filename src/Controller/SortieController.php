@@ -30,11 +30,12 @@ class SortieController extends AbstractController
      */
     public function createSortie(Request $request,EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
+        $date = new \DateTime();
 
         $maValeur = $request->request->get("valeurenregistrer");
+        $etatpasser = 2;
 
         $userid = $this->getUser()->getId();
-
 
         $sortie = new Sorties();
 
@@ -53,11 +54,20 @@ class SortieController extends AbstractController
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
-            $etat = $this->getDoctrine()
-                ->getRepository(Etats::class)
-                ->find($maValeur);
 
-            $sortie->setNoEtat($etat);
+            if($sortie->getDateCloture() > $date){
+                $etat = $this->getDoctrine()
+                    ->getRepository(Etats::class)
+                    ->find($etatpasser);
+                $sortie->setNoEtat($etat);
+            }else{
+                $etat = $this->getDoctrine()
+                    ->getRepository(Etats::class)
+                    ->find($maValeur);
+                $sortie->setNoEtat($etat);
+            }
+
+
 
             //ajout photo
             $photoFile = $sortieForm->get('photo')->getData();

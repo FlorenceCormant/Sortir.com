@@ -6,6 +6,7 @@ use App\Repository\VillesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=VillesRepository::class)
@@ -31,6 +32,7 @@ class Villes
 
     /**
      * @ORM\OneToMany(targetEntity=Lieux::class, mappedBy="no_ville")
+     * @Assert\NotBlank()
      */
     private $lieuxes;
 
@@ -132,5 +134,10 @@ class Villes
         }
 
         return $this;
+    }
+
+    public function  __toString()
+    {
+        return $this->nom;
     }
 }

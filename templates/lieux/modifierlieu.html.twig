@@ -14,9 +14,10 @@
 
         {{ form_start(lieuForm) }}
         <div class="form container">
-            <div class="form-group ">
-                {{ form_row(lieuForm.no_ville, {'attr':{'class':'form-control'}}) }}
+            <div>
+                Ville : {{ lieu.noVille.nom }}
             </div>
+            </br>
             <div class="form-group">
                 {{ form_row(lieuForm.nom , {'attr':{'class':'form-control'}}) }}
             </div>
